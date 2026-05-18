@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0f0f1a">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.firebaseio.com https://*.firebasedatabase.app https://*.googleapis.com wss://*.firebaseio.com wss://*.firebasedatabase.app; img-src 'self' data: blob:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.firebaseio.com https://*.firebasedatabase.app https://*.europe-west1.firebasedatabase.app https://*.googleapis.com wss://*.firebaseio.com wss://*.firebasedatabase.app; img-src 'self' data: blob:;">
 <title>LoveOS 💕 v3.5</title>
 <style>
 :root {
@@ -553,7 +553,7 @@ input::placeholder{color:var(--text-secondary);}
 const FB_CFG = {
   apiKey: "AIzaSyAqn2f7ThAf1SEd_5rcILeVzOrwcRRO70c",
   authDomain: "loveos-ae2cc.firebaseapp.com",
-  databaseURL: "https://loveos-ae2cc-default-rtdb.firebaseio.com",
+  databaseURL: "https://loveos-ae2cc-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "loveos-ae2cc",
   storageBucket: "loveos-ae2cc.firebasestorage.app",
   messagingSenderId: "309225005489",
@@ -1132,7 +1132,15 @@ async function connectFB(){
     _fbRefs.push(tttRef);
     tttRef.on('value', snap => {
       const t = snap.val();
-      if(t && t.lastSender !== S.myRole){ S.ttt = t; saveLocal(); renderTTT(); }
+      if(t && t.lastSender !== S.myRole){ 
+        // Validate received data structure
+        if (!t.board || !Array.isArray(t.board)) {
+          t.board = Array(9).fill(null);
+        }
+        S.ttt = t; 
+        saveLocal(); 
+        renderTTT(); 
+      }
     });
 
     shared.child('hearts').on('value', snap => {
@@ -2417,6 +2425,10 @@ function initTTT(){
 
 function renderTTT(){
   const sym = {'X':'❌','O':'⭕'};
+  // Ensure board exists
+  if (!S.ttt || !Array.isArray(S.ttt.board)) {
+    S.ttt = { board: Array(9).fill(null), turn: 'X', scores: {X:0, O:0}, lastSender: '' };
+  }
   S.ttt.board.forEach((v,i) => {
     const c = document.getElementById('ttt'+i); 
     if(!c) return;
@@ -2445,7 +2457,8 @@ function renderTTT(){
 }
 
 function tttMove(i){
-  if(!S.ttt.board || S.ttt.board[i] || checkTTTWin(S.ttt.board)) return;
+  if(!S.ttt || !Array.isArray(S.ttt.board)) return;
+  if(S.ttt.board[i] || checkTTTWin(S.ttt.board)) return;
   if(S.ttt.lastSender === S.myRole) return;
 
   if(!db || !S.settings.syncEnabled) {
@@ -3050,27 +3063,63 @@ function installPWA() {
 document.addEventListener('DOMContentLoaded', init);
 
 // Service Worker registration
+// Service Worker registration (external file)
 if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE_NAME = 'loveos-v3.5';
-    const urlsToCache = ['./'];
-    self.addEventListener('install', event => {
-      event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
-      self.skipWaiting();
-    });
-    self.addEventListener('fetch', event => {
-      event.respondWith(caches.match(event.request).then(response => {
-        if (response) return response;
-        return fetch(event.request).catch(() => new Response('Offline'));
-      }));
-    });
-  `;
-  const swBlob = new Blob([swCode], {type: 'application/javascript'});
-  const swUrl = URL.createObjectURL(swBlob);
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register(swUrl).catch(err => console.error('SW Error:', err));
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.error('[SW] Registration failed:', err));
   });
 }
+
+</script>
+</body>
+</html
+          scheduleSave(); 
+          // After import, if sync is enabled, force overwrite remote data
+          if (S.settings.syncEnabled && db) {
+            showToast('🔄 Синхронизация импортированных данных...');
+            setTimeout(() => { fbPush(); showToast('✅ Данные импортированы и синхронизированы'); }, 1000);
+          }
+          location.reload();
+        } else showToast('Неподдерживаемая версия');
+      }catch(err){ 
+        console.error(err);
+        showToast('Ошибка импорта: файл повреждён'); 
+      }
+    };
+    r.readAsText(f);
+  }; 
+  inp.click();
+}
+
+function installPWA() {
+  if (window._deferredInstall) {
+    window._deferredInstall.prompt();
+    window._deferredInstall.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        showToast('📲 Установка началась');
+      }
+      window._deferredInstall = null;
+      const btn = document.getElementById('installBtn');
+      if (btn) btn.style.display = 'none';
+    });
+  }
+}
+
+// ==================== START ====================
+document.addEventListener('DOMContentLoaded', init);
+
+// Service Worker registration
+// Service Worker registration (external file)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.error('[SW] Registration failed:', err));
+  });
+}
+
 </script>
 </body>
 </html>
