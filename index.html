@@ -3072,4 +3072,3078 @@ if ('serviceWorker' in navigator) {
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.firebaseio.com https://*.firebasedatabase.app https://*.googleapis.com wss://*.firebaseio.com wss://*.firebasedatabase.app; img-src 'self' data: blob:;">
+<title>LoveOS 💕 v3.52</title>
+<style>
+:root {
+  --bg: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --card: rgba(255,255,255,0.05);
+  --card-border: rgba(255,255,255,0.08);
+  --accent: #e91e63;
+  --accent-secondary: #9c27b0;
+  --text: #ffffff;
+  --text-secondary: rgba(255,255,255,0.6);
+  --success: #4caf50;
+  --warning: #ff9800;
+  --danger: #f44336;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.3);
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --glass: rgba(255,255,255,0.03);
+}
+[data-theme="light"] {
+  --bg: #f5f5f7;
+  --bg-secondary: #ffffff;
+  --card: rgba(255,255,255,0.8);
+  --card-border: rgba(0,0,0,0.05);
+  --text: #1a1a2e;
+  --text-secondary: rgba(0,0,0,0.5);
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --glass: rgba(255,255,255,0.6);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:var(--font);color:var(--text);}
+body{background:var(--bg);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+
+.bg-anim{position:fixed;inset:0;z-index:0;overflow:hidden;background:linear-gradient(160deg,var(--bg) 0%,var(--bg-secondary) 100%);}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;animation:blobDrift 16s ease-in-out infinite alternate;}
+.blob1{width:300px;height:300px;background:var(--accent);top:-80px;right:-60px;}
+.blob2{width:260px;height:260px;background:var(--accent-secondary);bottom:60px;left:-60px;animation-delay:-6s;}
+.blob3{width:200px;height:200px;background:#f5c842;top:40%;right:10%;animation-delay:-12s;}
+@keyframes blobDrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,20px) scale(1.1)}}
+
+.heart-layer{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden;}
+.fheart{position:absolute;bottom:-40px;font-size:1.6rem;animation:fhUp 5s ease-out forwards;}
+@keyframes fhUp{0%{transform:translateY(0) scale(.5) rotate(-10deg);opacity:0}15%{opacity:1}80%{opacity:.7}100%{transform:translateY(-110vh) scale(.8) rotate(15deg);opacity:0}}
+
+.app{max-width:480px;margin:0 auto;position:relative;z-index:1;padding-bottom:100px;}
+.page{display:none;padding:16px 16px 100px;animation:fadeIn 0.35s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.98)}to{opacity:1;transform:scale(1)}}
+
+.page.active .card{animation:staggerIn 0.4s ease backwards;}
+.page.active .card:nth-child(1){animation-delay:0s;}
+.page.active .card:nth-child(2){animation-delay:0.05s;}
+.page.active .card:nth-child(3){animation-delay:0.10s;}
+.page.active .card:nth-child(4){animation-delay:0.15s;}
+.page.active .card:nth-child(5){animation-delay:0.20s;}
+.page.active .card:nth-child(6){animation-delay:0.25s;}
+@keyframes staggerIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.header{position:sticky;top:0;z-index:100;backdrop-filter:blur(20px);background:var(--glass);border-bottom:1px solid var(--card-border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;height:56px;}
+.header-logo{font-weight:800;font-size:1.15rem;color:var(--accent);letter-spacing:-0.3px;}
+.header-title{position:absolute;left:50%;transform:translateX(-50%);font-weight:700;font-size:1.05rem;color:var(--text);}
+.theme-toggle{background:var(--bg-secondary);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--text);transition:transform .15s;}
+.theme-toggle:active{transform:scale(0.92);}
+
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--glass);backdrop-filter:blur(20px);border-top:1px solid var(--card-border);display:flex;justify-content:space-around;align-items:center;padding:8px 0 calc(8px + env(safe-area-inset-bottom));height:64px;}
+.nb{background:none;border:none;color:var(--text-secondary);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:4px 4px;border-radius:14px;transition:.2s;flex:1;min-width:0;position:relative;user-select:none;-webkit-user-select:none;}
+.nb svg{width:20px;height:20px;fill:currentColor;}
+.nb.active{color:var(--accent);}
+.nb.active::after{content:'';position:absolute;top:0;width:20px;height:3px;background:var(--accent);border-radius:0 0 4px 4px;}
+
+.fab{position:fixed;bottom:calc(64px + 16px + env(safe-area-inset-bottom));right:16px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-secondary));color:#fff;border:none;box-shadow:0 4px 16px rgba(233,30,99,0.4);display:none;align-items:center;justify-content:center;font-size:1.5rem;z-index:90;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.fab:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(233,30,99,0.5);}
+.fab:active{transform:scale(0.96);}
+
+.card{background:var(--card);backdrop-filter:blur(20px);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--card-border);transition:transform .2s;}
+.card-title{font-size:1.05rem;font-weight:700;color:var(--text-secondary);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 18px;border-radius:50px;font-weight:700;font-size:.9rem;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn:active{transform:scale(.96);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-secondary));color:#fff;box-shadow:0 4px 18px rgba(0,0,0,0.2);}
+.btn-secondary{background:var(--bg-secondary);color:var(--text-secondary);}
+.btn-ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent);}
+.btn-full{width:100%;}
+.btn-sm{padding:8px 14px;font-size:.78rem;}
+.btn-danger{background:rgba(244,67,54,.1);color:var(--danger);}
+
+.ig{margin-bottom:12px;}
+.ig label{display:block;font-size:.75rem;font-weight:700;color:var(--text-secondary);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+input,textarea,select{width:100%;padding:12px 14px;border:1.5px solid var(--card-border);border-radius:var(--radius-sm);background:var(--bg-secondary);color:var(--text);font-size:.9rem;outline:none;transition:.2s;}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);background:var(--bg);}
+input::placeholder{color:var(--text-secondary);}
+
+.timer-hero{background:linear-gradient(135deg,var(--accent),var(--accent-secondary));border-radius:var(--radius);padding:24px 20px;text-align:center;color:#fff;margin-bottom:14px;box-shadow:var(--shadow);}
+.timer-big{font-size:3rem;font-weight:800;line-height:1;}
+.timer-big small{font-size:1rem;font-weight:400;opacity:.85;}
+.timer-sub{font-size:.85rem;opacity:.85;margin-top:6px;}
+.timer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;}
+.t-box{background:rgba(255,255,255,0.15);border-radius:var(--radius-sm);padding:14px 8px;text-align:center;border:1px solid rgba(255,255,255,0.1);}
+.t-box .n{font-size:1.5rem;font-weight:700;}
+.t-box .l{font-size:.65rem;opacity:.8;text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+.love-btn{width:100%;padding:18px;background:linear-gradient(135deg,var(--accent),var(--accent-secondary));border:none;border-radius:var(--radius);color:#fff;font-size:1.15rem;font-weight:700;cursor:pointer;margin-bottom:14px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .15s;}
+.love-btn:active{transform:scale(.97);}
+
+.profile-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.pcard{background:var(--card);backdrop-filter:blur(10px);border-radius:var(--radius);padding:16px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--card-border);cursor:pointer;transition:transform .2s;}
+.pcard:active{transform:scale(0.98);}
+.pavatar{font-size:2.4rem;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ffe0ef,#e8d0ff);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;border:3px solid var(--card-border);}
+.pname{font-size:1rem;font-weight:700;color:var(--text-secondary);}
+.ptag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.7rem;font-weight:600;margin:3px 2px;background:var(--bg-secondary);color:var(--text-secondary);}
+.mood-emoji{font-size:1.8rem;cursor:pointer;opacity:.4;transition:.2s;display:inline-block;}
+.mood-emoji.active{opacity:1;transform:scale(1.15);}
+
+.chat-container{display:flex;flex-direction:column;height:calc(100vh - 210px);min-height:350px;background:var(--card);backdrop-filter:blur(10px);border-radius:var(--radius);border:1px solid var(--card-border);overflow:hidden;box-shadow:var(--shadow);}
+@supports (height:1dvh){ .chat-container{height:calc(100dvh - 210px);} }
+.chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;}
+.msg{max-width:78%;padding:10px 14px;border-radius:18px;font-size:.9rem;line-height:1.45;word-wrap:break-word;animation:msgIn .3s ease;position:relative;}
+.msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--accent),var(--accent-secondary));color:#fff;border-bottom-right-radius:4px;}
+.msg.partner{align-self:flex-start;background:var(--bg-secondary);color:var(--text);border-bottom-left-radius:4px;}
+.msg-time{font-size:.65rem;opacity:.6;margin-top:4px;}
+.chat-input-area{display:flex;gap:8px;padding:12px;border-top:1px solid var(--card-border);background:var(--glass);}
+.chat-input{flex:1;border:1.5px solid var(--card-border);border-radius:20px;padding:10px 14px;font-size:.9rem;background:var(--bg-secondary);color:var(--text);resize:none;max-height:120px;overflow-y:auto;}
+.chat-send{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-secondary));color:#fff;border:none;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s;}
+.chat-send:active{transform:scale(0.92);}
+
+.wish{display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg-secondary);border-radius:var(--radius-sm);margin-bottom:10px;border:1px solid var(--card-border);transition:transform .2s;}
+.wish:active{transform:scale(0.98);}
+.wish.done{opacity:.6;}
+.wish.done .wish-text{text-decoration:line-through;}
+.wcheck{width:24px;height:24px;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:.8rem;transition:.2s;}
+.wcheck.ok{background:var(--accent);color:#fff;}
+.wish-text{flex:1;font-size:.9rem;font-weight:600;}
+.wish-meta{font-size:.7rem;color:var(--text-secondary);margin-top:2px;}
+.cat-chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:700;margin-left:4px;}
+.cat-travel{background:#d4f5f1;color:#2a9d8f;}
+.cat-gift{background:#fff3cd;color:#b08a00;}
+.cat-experience{background:#ffe0eb;color:#c2185b;}
+.cat-other{background:#ede7f6;color:#6b2d5e;}
+
+#notesList{display:grid;grid-template-columns:1fr;gap:12px;}
+@media(min-width:481px){#notesList{grid-template-columns:1fr 1fr;}}
+.note{background:var(--card);border-radius:var(--radius);padding:16px;border-left:4px solid var(--accent);box-shadow:var(--shadow);border:1px solid var(--card-border);transition:transform .2s;}
+.note:active{transform:scale(0.98);}
+.note.capsule{border-left-color:var(--warning);background:linear-gradient(135deg,var(--card),rgba(255,152,0,0.05));}
+.note-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.note-author{font-size:.8rem;font-weight:700;color:var(--accent);}
+.note-date{font-size:.7rem;color:var(--text-secondary);}
+
+.cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.cal-nav-btn{background:var(--bg-secondary);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:transform .15s;}
+.cal-nav-btn:active{transform:scale(0.92);}
+.cal-mon{font-size:1.05rem;font-weight:700;color:var(--text-secondary);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;}
+.cal-dn{font-size:.6rem;text-transform:uppercase;color:var(--text-secondary);padding:6px 0;font-weight:700;}
+.cal-d{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:var(--radius-sm);font-size:.8rem;transition:.15s;background:var(--bg-secondary);position:relative;cursor:pointer;border:1px solid transparent;}
+.cal-d.today{border-color:var(--accent);font-weight:900;color:var(--accent);}
+.cal-d.period{background:rgba(244,67,54,0.2);color:var(--danger);}
+.cal-d.ovul{background:rgba(76,175,80,0.2);color:var(--success);font-weight:700;}
+.cal-d .cdots{display:flex;gap:2px;margin-top:2px;flex-wrap:wrap;justify-content:center;}
+.cal-d .cd{width:4px;height:4px;border-radius:50%;}
+
+.symp-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.symp{padding:6px 12px;border-radius:20px;font-size:.8rem;cursor:pointer;background:var(--bg-secondary);border:1.5px solid transparent;transition:.2s;}
+.symp.on{background:rgba(233,30,99,.15);border-color:var(--accent);color:var(--accent);}
+
+.setup-screen{position:fixed;inset:0;background:linear-gradient(135deg,var(--bg),var(--bg-secondary));z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+.setup-screen h1{font-size:2.5rem;color:var(--accent);margin-bottom:6px;font-weight:800;}
+.setup-screen h2{font-size:1.3rem;color:var(--text-secondary);margin-bottom:16px;font-weight:700;}
+.setup-card{background:var(--card);backdrop-filter:blur(20px);border-radius:var(--radius);padding:24px;width:100%;max-width:420px;box-shadow:var(--shadow);border:1px solid var(--card-border);}
+.step-indicator{display:flex;gap:6px;justify-content:center;margin-bottom:20px;}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--card-border);transition:.3s;}
+.step-dot.active{background:var(--accent);width:24px;border-radius:4px;}
+
+.overlay{position:fixed;inset:0;background:rgba(15,15,26,.6);backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center;z-index:500;padding:16px;}
+.overlay.on{display:flex;}
+.modal{background:var(--card);backdrop-filter:blur(20px);border-radius:28px 28px 20px 20px;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;padding:24px;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);box-shadow:var(--shadow);border:1px solid var(--card-border);}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.modal-title{font-size:1.2rem;font-weight:700;color:var(--text-secondary);}
+.modal-close{background:var(--bg-secondary);border:none;width:32px;height:32px;border-radius:50%;font-size:1rem;cursor:pointer;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;transition:transform .15s;}
+.modal-close:active{transform:scale(0.92);}
+
+@media(min-width:481px){
+  .overlay{align-items:center;}
+  .modal{border-radius:var(--radius);transform:scale(0.9);opacity:0;animation:modalIn .3s ease forwards;}
+  @keyframes modalIn{from{transform:scale(0.9);opacity:0}to{transform:scale(1);opacity:1}}
+  body{background:#000;}
+  .app{border-left:1px solid var(--card-border);border-right:1px solid var(--card-border);box-shadow:0 0 40px rgba(0,0,0,0.5);}
+}
+
+.ttt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:240px;margin:12px auto;}
+.ttt-cell{aspect-ratio:1;background:var(--bg-secondary);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;transition:.2s;border:1px solid var(--card-border);}
+.ttt-cell:hover{background:var(--card-border);}
+.ttt-cell.win{background:linear-gradient(135deg,var(--accent),var(--accent-secondary));color:#fff;}
+.hangman-word{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:12px 0;}
+.hangman-letter{width:28px;height:34px;border-bottom:3px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--text);}
+.hangman-keyboard{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:10px;}
+.hangman-key{width:30px;height:30px;background:var(--bg-secondary);border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:none;color:var(--text);transition:transform .1s;}
+.hangman-key:active{transform:scale(0.92);}
+.hangman-key.correct{background:var(--success);color:#fff;}
+.hangman-key.wrong{background:var(--danger);color:#fff;}
+.roulette-box{background:linear-gradient(135deg,var(--accent),var(--accent-secondary));border-radius:var(--radius);padding:20px;text-align:center;color:#fff;margin:10px 0;}
+.roulette-text{font-size:1.1rem;font-weight:700;min-height:50px;display:flex;align-items:center;justify-content:center;}
+
+.empty{text-align:center;padding:30px;color:var(--text-secondary);font-size:.9rem;}
+.del-btn{background:rgba(255,71,87,.08);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--danger);flex-shrink:0;transition:transform .1s;}
+.del-btn:active{transform:scale(0.92);}
+.filter-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.pill{padding:5px 12px;border-radius:20px;font-size:.72rem;font-weight:700;background:var(--bg-secondary);color:var(--text-secondary);cursor:pointer;transition:.2s;border:none;}
+.pill.active{background:var(--accent);color:#fff;}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-120px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:50px;font-size:.85rem;font-weight:700;z-index:600;transition:transform .4s ease;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+.menu-list{display:flex;flex-direction:column;}
+.menu-item{display:flex;align-items:center;padding:14px 16px;cursor:pointer;transition:background .2s;gap:12px;}
+.menu-item:active{background:var(--bg-secondary);}
+.menu-icon{font-size:1.2rem;}
+.menu-label{flex:1;font-weight:600;font-size:.95rem;color:var(--text);}
+.menu-arrow{color:var(--text-secondary);font-size:1.2rem;}
+.menu-divider{height:1px;background:var(--card-border);margin:0 16px;}
+
+.toggle{position:relative;width:44px;height:24px;background:var(--bg-secondary);border-radius:12px;cursor:pointer;transition:.2s;flex-shrink:0;}
+.toggle.on{background:var(--accent);}
+.toggle-knob{position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.toggle.on .toggle-knob{left:22px;}
+
+.day-modal .symp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;}
+.day-modal .symp-grid .symp{text-align:center;}
+.phase-select{display:flex;flex-direction:column;gap:8px;margin:12px 0;}
+.phase-option{padding:12px;border-radius:var(--radius-sm);border:2px solid var(--card-border);cursor:pointer;transition:.2s;display:flex;align-items:center;gap:10px;}
+.phase-option.on{border-color:var(--accent);background:rgba(233,30,99,.1);}
+.phase-icon{font-size:1.5rem;}
+.phase-label{font-weight:700;font-size:.9rem;}
+.phase-desc{font-size:.75rem;color:var(--text-secondary);}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--accent-secondary);border-radius:2px;}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<div class="bg-anim"><div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div></div>
+<div class="heart-layer" id="hlayer"></div>
+
+<!-- SETUP WIZARD -->
+<div class="setup-screen" id="setupScreen">
+  <div style="font-size:3rem;margin-bottom:4px;">💕</div>
+  <h1>LoveOS</h1>
+  <div class="setup-card" id="setupCard">
+    <div class="step-indicator" id="stepInd"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+    <div id="step1">
+      <h2>👋 Давай знакомиться</h2>
+      <div class="ig"><label>Твоё имя</label><input type="text" id="sName1" placeholder="Например, Алекс" maxlength="16" aria-label="Твоё имя"></div>
+      <div class="ig"><label>Имя второй половинки</label><input type="text" id="sName2" placeholder="Например, Маша" maxlength="16" aria-label="Имя партнёра"></div>
+      <button class="btn btn-primary btn-full" onclick="nextStep(2)">Дальше ➜</button>
+    </div>
+    <div id="step2" style="display:none;">
+      <h2>💝 Наша история</h2>
+      <div class="ig"><label>Вместе с</label><input type="date" id="sDate" aria-label="Дата начала отношений"></div>
+      <div class="ig"><label>Кто ты на этом устройстве?</label>
+        <select id="sRole" aria-label="Выбор роли">
+          <option value="me">👤 Я</option>
+          <option value="partner">👤 Моя половинка</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary btn-full" onclick="nextStep(1)">◀ Назад</button>
+        <button class="btn btn-primary btn-full" onclick="nextStep(3)">Дальше ➜</button>
+      </div>
+    </div>
+    <div id="step3" style="display:none;text-align:center;">
+      <div style="font-size:3rem;margin-bottom:8px;">🎉</div>
+      <h2>Готово!</h2>
+      <p style="font-size:.9rem;color:var(--text-secondary);margin-bottom:16px;">Приложение настроено. Нажми кнопку ниже, чтобы начать.</p>
+      <button class="btn btn-primary btn-full" onclick="finishSetup()">Начать 💕</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app" id="mainApp" style="display:none;">
+  <div class="header">
+    <div class="header-logo">Love<span style="color:var(--text-secondary);">OS</span></div>
+    <div class="header-title" id="pageTitle">Главная</div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Переключить тему">🌙</button>
+  </div>
+
+  <!-- PAGE: Home -->
+  <div class="page active" id="page-home">
+    <button class="love-btn" onclick="sendHeart(event)"><span style="font-size:1.8rem;">💓</span> Отправить сердечко</button>
+    <div class="timer-hero">
+      <div style="font-size:.85rem;opacity:.85;margin-bottom:4px;">Мы вместе уже</div>
+      <div class="timer-big"><span id="th-days">0</span> <small>дней</small></div>
+      <div class="timer-sub" id="th-sub">0 лет, 0 мес, 0 дн</div>
+    </div>
+    <div class="timer-grid">
+      <div class="t-box"><div class="n" id="t-h">0</div><div class="l">часов</div></div>
+      <div class="t-box"><div class="n" id="t-m">0</div><div class="l">минут</div></div>
+      <div class="t-box"><div class="n" id="t-s">0</div><div class="l">секунд</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📅 До встречи</div>
+      <div class="ig" style="margin-bottom:8px;"><input type="datetime-local" id="meetDate" onchange="saveMeeting()" aria-label="Дата встречи"></div>
+      <div class="timer-grid" id="meetGrid" style="display:none;">
+        <div class="t-box"><div class="n" id="md-d">0</div><div class="l">дней</div></div>
+        <div class="t-box"><div class="n" id="md-h">0</div><div class="l">часов</div></div>
+        <div class="t-box"><div class="n" id="md-m">0</div><div class="l">минут</div></div>
+      </div>
+      <div id="meetDone" style="display:none;text-align:center;color:var(--accent);font-weight:700;">Встреча состоялась! 💕</div>
+    </div>
+    <div class="card">
+      <div class="card-title">✨ Чем заняться?</div>
+      <div class="roulette-box"><div class="roulette-text" id="rouletteText">Нажми кнопку ниже</div></div>
+      <button class="btn btn-secondary btn-full" onclick="spinRoulette()">🎲 Случайная идея</button>
+    </div>
+  </div>
+
+  <!-- PAGE: Cycle -->
+  <div class="page" id="page-cycle">
+    <div class="card" id="cycle-phase-card">
+      <div class="card-title">🌙 Фаза цикла</div>
+      <div class="empty">Загрузка...</div>
+    </div>
+    <div class="card" id="cycle-insight">
+      <div class="card-title">🔮 Прогноз</div>
+      <div class="empty">Отметьте первый день месячных для анализа</div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 История циклов</div>
+      <div id="cycle-history"><div class="empty">Нет данных</div></div>
+    </div>
+    <div class="card">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="chMo(-1)">◀</button>
+        <div class="cal-mon" id="calTitle"></div>
+        <button class="cal-nav-btn" onclick="chMo(1)">▶</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+        <div class="t-box"><div class="n" id="cyDay">1</div><div class="l">день цикла</div></div>
+        <div class="t-box"><div class="n" id="cyNext">28</div><div class="l">до месячных</div></div>
+      </div>
+      <div style="margin-top:12px;font-size:.9rem;">Фаза: <strong id="cyPhase" style="color:var(--accent);">—</strong></div>
+      <button class="btn btn-secondary btn-full" style="margin-top:14px;" onclick="markPeriod()">🩸 Отметить месячные сегодня</button>
+      <button class="btn btn-secondary btn-full" style="margin-top:8px;" onclick="showCycleChart()">📊 График циклов</button>
+    </div>
+  </div>
+
+  <!-- PAGE: Chat -->
+  <div class="page" id="page-chat">
+    <div class="chat-container">
+      <div class="chat-messages" id="chatBox" role="log" aria-live="polite" aria-label="Сообщения чата"></div>
+      <div class="chat-input-area">
+        <textarea class="chat-input" id="chatInput" rows="1" placeholder="Написать сообщение..." aria-label="Ввод сообщения"></textarea>
+        <button class="chat-send" onclick="sendChat()" aria-label="Отправить">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: Stuff (Wishes) -->
+  <div class="page" id="page-stuff">
+    <div class="filter-pills">
+      <button class="pill active" onclick="setStuffTab('wishes',this)">⭐ Желания</button>
+      <button class="pill" onclick="setStuffTab('tasks',this)">✅ Задачи</button>
+      <button class="pill" onclick="setStuffTab('savings',this)">💰 Копилки</button>
+    </div>
+    <div id="stuff-wishes"><div id="wishesList"></div></div>
+    <div id="stuff-tasks" style="display:none;"><div id="tasksList"></div></div>
+    <div id="stuff-savings" style="display:none;"><div id="savingsList"></div></div>
+  </div>
+
+  <!-- PAGE: Notes -->
+  <div class="page" id="page-notes">
+    <div id="notesList"></div>
+  </div>
+
+  <!-- PAGE: More (Settings + Games) -->
+  <div class="page" id="page-more">
+    <div class="card">
+      <div class="card-title">⚙️ Настройки</div>
+      <div class="menu-list">
+        <div class="menu-item">
+          <span class="menu-icon">🌙</span><span class="menu-label">Тёмная тема</span>
+          <div class="toggle" id="themeToggle" onclick="toggleThemeSetting()"><div class="toggle-knob"></div></div>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">🔔</span><span class="menu-label">Уведомления</span>
+          <div class="toggle" id="notifToggle" onclick="toggleNotifSetting()"><div class="toggle-knob"></div></div>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">🔗</span><span class="menu-label">Синхронизация</span>
+          <div class="toggle" id="syncToggle" onclick="toggleSyncSetting()"><div class="toggle-knob"></div></div>
+        </div>
+      </div>
+      <div id="syncPanel" style="display:none;margin-top:12px;">
+        <div id="syncCodeDisplay" style="font-size:1.2rem;font-weight:700;text-align:center;color:var(--accent);margin-bottom:8px;"></div>
+        <div class="ig" style="margin-bottom:8px;">
+          <label>Код пары (6 цифр)</label>
+          <input type="text" id="partnerCodeInput" placeholder="Введите код партнёра" maxlength="6" inputmode="numeric">
+        </div>
+        <button class="btn btn-primary btn-full" onclick="joinPartnerCode()">Подключиться к партнёру</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎮 Игры</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="pcard" onclick="goPage('games')">
+          <div class="pavatar">❌⭕</div>
+          <div class="pname">Крестики-нолики</div>
+        </div>
+        <div class="pcard" onclick="goPage('games')">
+          <div class="pavatar">🔤</div>
+          <div class="pname">Виселица</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🗃️ Данные</div>
+      <button class="btn btn-secondary btn-full" onclick="exportData()">📤 Экспорт JSON</button>
+      <button class="btn btn-secondary btn-full" style="margin-top:8px;" onclick="importData()">📥 Импорт JSON</button>
+      <button class="btn btn-secondary btn-full" style="margin-top:8px;" onclick="clearCycleData()">🩸 Очистить данные цикла</button>
+      <button class="btn btn-danger btn-full" style="margin-top:8px;" onclick="resetAll()">⚠️ Очистить всё</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ℹ️ О приложении</div>
+      <div style="font-size:.85rem;color:var(--text-secondary);line-height:1.5;">
+        LoveOS v3.52 — Personal Edition<br>
+        Офлайн-first PWA для двоих.<br>
+        Данные хранятся локально. Синхронизация через Firebase по желанию.
+      </div>
+      <button class="btn btn-secondary btn-full" style="margin-top:12px;display:none;" id="installBtn" onclick="installPWA()">📲 Установить приложение</button>
+    </div>
+  </div>
+
+  <!-- PAGE: Games (sub-page) -->
+  <div class="page" id="page-games">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div class="card-title" style="margin:0;">❌⭕ Крестики-нолики</div>
+        <button class="btn btn-secondary btn-sm" onclick="resetTTT()">Сброс</button>
+      </div>
+      <div style="text-align:center;font-size:.85rem;color:var(--text-secondary);margin-bottom:8px;" id="tttStatus">Ход: ❌</div>
+      <div class="ttt-grid" id="tttGrid"></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div class="card-title" style="margin:0;">🔤 Виселица</div>
+        <button class="btn btn-secondary btn-sm" onclick="newHangman()">Новое слово</button>
+      </div>
+      <div style="text-align:center;font-size:2rem;" id="hangFig">😊</div>
+      <div class="hangman-word" id="hangWord"></div>
+      <div style="text-align:center;font-size:.8rem;color:var(--text-secondary);margin-bottom:8px;" id="hangHint"></div>
+      <div class="hangman-keyboard" id="hangKeys"></div>
+      <div style="text-align:center;margin-top:8px;font-weight:700;color:var(--accent);" id="hangResult"></div>
+    </div>
+  </div>
+
+  <!-- PAGE: Profiles -->
+  <div class="page" id="page-profiles">
+    <div class="card-title" style="text-align:center;justify-content:center;margin-bottom:14px;">👫 Профили</div>
+    <div class="profile-pair">
+      <div class="pcard" onclick="openProfile('me')">
+        <div class="pavatar" id="pa1">❤️</div>
+        <div class="pname" id="pn1">Я</div>
+        <div class="ptag" id="pt1">❤️ Красный</div>
+      </div>
+      <div class="pcard" onclick="openProfile('partner')">
+        <div class="pavatar" id="pa2">💙</div>
+        <div class="pname" id="pn2">Партнёр</div>
+        <div class="ptag" id="pt2">💙 Синий</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎭 Тесты</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" onclick="openLoveLang()" style="flex:1;">💝 Язык любви</button>
+        <button class="btn btn-primary btn-sm" onclick="openKnowQuiz()" style="flex:1;">🧠 Насколько знаешь?</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">😊 Настроение сегодня</div>
+      <div style="display:flex;justify-content:center;gap:8px;margin:8px 0;">
+        <span class="mood-emoji" onclick="setMood('😊')" id="mood-😊" role="button" aria-label="Настроение радость">😊</span>
+        <span class="mood-emoji" onclick="setMood('😐')" id="mood-😐" role="button" aria-label="Настроение нейтральное">😐</span>
+        <span class="mood-emoji" onclick="setMood('😢')" id="mood-😢" role="button" aria-label="Настроение грусть">😢</span>
+        <span class="mood-emoji" onclick="setMood('😠')" id="mood-😠" role="button" aria-label="Настроение злость">😠</span>
+        <span class="mood-emoji" onclick="setMood('🤩')" id="mood-🤩" role="button" aria-label="Настроение восторг">🤩</span>
+      </div>
+      <input type="text" id="moodComment" placeholder="Комментарий..." maxlength="50" onchange="saveMood()" style="font-size:.85rem;" aria-label="Комментарий к настроению">
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fabBtn" onclick="handleFab()">+</button>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-head"><div class="modal-title" id="mtitle">—</div><button class="modal-close" onclick="closeModal(event)" aria-label="Закрыть">✕</button></div>
+    <div id="mcontent"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <button class="nb active" onclick="goPage('home',this)" aria-label="Главная">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    Главная
+  </button>
+  <button class="nb" onclick="goPage('cycle',this)" aria-label="Цикл">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    Цикл
+  </button>
+  <button class="nb" onclick="goPage('chat',this)" aria-label="Чат">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+    Чат
+  </button>
+  <button class="nb" onclick="goPage('stuff',this)" aria-label="Желания">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    Желания
+  </button>
+  <button class="nb" onclick="goPage('notes',this)" aria-label="Заметки">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+    Заметки
+  </button>
+  <button class="nb" onclick="goPage('more',this)" aria-label="Ещё">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    Ещё
+  </button>
+</nav>
+
+<script>
+'use strict';
+
+// ==================== CONFIG ====================
+const FB_CFG = {
+  apiKey: "AIzaSyAqn2f7ThAf1SEd_5rcILeVzOrwcRRO70c",
+  authDomain: "loveos-ae2cc.firebaseapp.com",
+  databaseURL: "https://loveos-ae2cc-default-rtdb.firebaseio.com",
+  projectId: "loveos-ae2cc",
+  storageBucket: "loveos-ae2cc.firebasestorage.app",
+  messagingSenderId: "309225005489",
+  appId: "1:309225005489:web:0ea694f834e5726be25d90"
+};
+const LS_KEY = 'loveos_v3_personal';
+const MAX_CHAT = 200;
+const MAX_HEARTS = 100;
+const VISIBLE_BATCH = 50; // virtualization batch size
+
+// ==================== STATE ====================
+let S = {
+  version: 3.52, setup: false,
+  settings: { theme: 'dark', notifications: false, syncEnabled: false, partnerCode: null },
+  deviceId: localStorage.getItem('loveos_device_id') || generateId(),
+  me: { name: '', avatar: '❤️', color: '❤️ Красный', food: '🍕 Пицца', movie: '🎬 Начало', song: '🎵 Bohemian Rhapsody', hobby: '🎮 Игры', dream: '✈️ Япония', loveLang: '', moods: [], known: [] },
+  partner: { name: '', avatar: '💙', color: '💙 Синий', food: '🍣 Суши', movie: '🎬 Ла-Ла Ленд', song: '🎵 Yellow', hobby: '📚 Книги', dream: '✈️ Париж', loveLang: '', moods: [], known: [] },
+  startDate: '', myRole: 'me',
+  hearts: [], meetingDate: '', 
+  wishes: [], notes: [], capsules: [], tasks: [], savings: [], chat: [],
+  cycle: { length: 28, periodLength: 5, lastPeriod: '', periods: [], days: {}, symptoms: {} },
+  ttt: { board: Array(9).fill(null), turn: 'X', scores: {X:0, O:0}, lastSender: '' },
+  hangman: { word: '', guessed: [], wrong: 0 },
+  customIdeas: [
+    'Пикник в парке 🌿','Домашнее кино 🎬','Настольные игры 🎲','Ванна с пеной 🕯️',
+    'Танцы дома 💃','Готовить вместе 👩‍🍳','Прогулка ночью 🌙','Поехать на море 🌊'
+  ],
+  lastSync: 0
+};
+
+let fbApp = null, db = null, isOnline = false;
+let _fbRefs = []; 
+let currentStep = 1;
+let calDate = new Date();
+let currentPage = 'home';
+let modalDepth = 0;
+let chatRenderPending = false;
+let fbRetryCount = 0;
+const MAX_FB_RETRIES = 3;
+let _intervals = [];
+
+// Virtualization state
+let chatVisibleCount = VISIBLE_BATCH;
+let wishesVisibleCount = VISIBLE_BATCH;
+let tasksVisibleCount = VISIBLE_BATCH;
+let savingsVisibleCount = VISIBLE_BATCH;
+let notesVisibleCount = VISIBLE_BATCH;
+
+// Cache for cycle length
+let _cachedAvgCycle = null;
+let _cachedAvgPeriod = null;
+
+// ==================== THEME ====================
+function applyTheme(theme) {
+  document.body.setAttribute('data-theme', theme === 'light' ? 'light' : '');
+  const btn = document.querySelector('.theme-toggle');
+  if (btn) btn.textContent = theme === 'light' ? '☀️' : '🌙';
+  const tgl = document.getElementById('themeToggle');
+  if (tgl) tgl.classList.toggle('on', theme === 'light');
+}
+
+function toggleTheme() {
+  S.settings.theme = S.settings.theme === 'light' ? 'dark' : 'light';
+  applyTheme(S.settings.theme);
+  scheduleSave();
+}
+
+function toggleThemeSetting() {
+  toggleTheme();
+}
+
+// ==================== UTILS ====================
+function esc(t){
+  if (t == null) return '';
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
+
+function escAttr(t){
+  if (t == null) return '';
+  return String(t)
+    .replace(/\\/g, '\\\\')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
+function fmtDate(d){
+  // Use UTC methods to ensure consistency across timezones
+  const y = d.getUTCFullYear(), m = String(d.getUTCMonth()+1).padStart(2,'0'), day = String(d.getUTCDate()).padStart(2,'0');
+  return y + '-' + m + '-' + day;
+}
+
+function generateId(){
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+function generatePartnerCode() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+let _toastTimer = null;
+function showToast(msg, dur=2500){
+  const t = document.getElementById('toast');
+  if (_toastTimer) clearTimeout(_toastTimer);
+  t.textContent = msg;
+  t.classList.add('show');
+  _toastTimer = setTimeout(() => { t.classList.remove('show'); _toastTimer = null; }, dur);
+}
+
+function debounce(fn, ms){
+  let timer;
+  return function(...args){
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
+function safeVibrate(ms) {
+  if (navigator.vibrate && !/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    navigator.vibrate(ms);
+  }
+}
+
+// ==================== STATE INTEGRITY ====================
+function integrityCheck() {
+  let errors = [];
+  if (!S.me) { S.me = { name: '', avatar: '❤️', color: '❤️ Красный', food: '🍕 Пицца', movie: '🎬 Начало', song: '🎵 Bohemian Rhapsody', hobby: '🎮 Игры', dream: '✈️ Япония', loveLang: '', moods: [], known: [] }; errors.push('Restored me'); }
+  if (!S.partner) { S.partner = { name: '', avatar: '💙', color: '💙 Синий', food: '🍣 Суши', movie: '🎬 Ла-Ла Ленд', song: '🎵 Yellow', hobby: '📚 Книги', dream: '✈️ Париж', loveLang: '', moods: [], known: [] }; errors.push('Restored partner'); }
+  if (!S.cycle) { S.cycle = { length: 28, periodLength: 5, lastPeriod: '', periods: [], days: {}, symptoms: {} }; errors.push('Restored cycle'); }
+  if (!S.cycle.days) S.cycle.days = {};
+  if (!S.settings) S.settings = { theme: 'dark', notifications: false, syncEnabled: false, partnerCode: null };
+  if (!Array.isArray(S.chat)) S.chat = [];
+  if (!Array.isArray(S.wishes)) S.wishes = [];
+  if (!Array.isArray(S.tasks)) S.tasks = [];
+  if (!Array.isArray(S.savings)) S.savings = [];
+  if (!Array.isArray(S.notes)) S.notes = [];
+  if (!Array.isArray(S.capsules)) S.capsules = [];
+  if (Array.isArray(S.wishes)) S.wishes = S.wishes.filter(w => w && typeof w === 'object' && w.id && typeof w.text === 'string');
+  if (Array.isArray(S.tasks)) S.tasks = S.tasks.filter(t => t && typeof t === 'object' && t.id && typeof t.text === 'string');
+  if (Array.isArray(S.notes)) S.notes = S.notes.filter(n => n && typeof n === 'object' && n.id && typeof n.text === 'string');
+  if (Array.isArray(S.savings)) S.savings = S.savings.filter(s => s && typeof s === 'object' && s.id && typeof s.name === 'string');
+  if (Array.isArray(S.capsules)) S.capsules = S.capsules.filter(c => c && typeof c === 'object' && c.id && typeof c.text === 'string');
+  if (Array.isArray(S.chat)) S.chat = S.chat.filter(m => m && typeof m === 'object' && m.id && typeof m.text === 'string' && m.ts);
+  if (Array.isArray(S.hearts)) S.hearts = S.hearts.filter(h => h && typeof h === 'object' && h.ts);
+  if (Array.isArray(S.cycle.periods)) S.cycle.periods = S.cycle.periods.filter(p => typeof p === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(p));
+  if (S.version < 3.52) {
+    if (typeof S.meetingDate === 'string') {
+      if (S.meetingDate.includes('T')) S.meetingDate = new Date(S.meetingDate).getTime();
+      else S.meetingDate = '';
+    }
+    if (S.theme && !S.settings) S.settings = { theme: S.theme, notifications: false, syncEnabled: false, partnerCode: null };
+    S.version = 3.52;
+  }
+  if (errors.length) console.warn('Integrity fixes:', errors);
+}
+
+// ==================== INIT ====================
+function init(){
+  const raw = localStorage.getItem(LS_KEY);
+  if(raw){
+    try{
+      const p = JSON.parse(raw);
+      Object.keys(p).forEach(k => {
+        if(k === 'me' || k === 'partner' || k === 'cycle' || k === 'ttt' || k === 'hangman' || k === 'settings'){
+          S[k] = {...S[k], ...p[k]};
+          if(k === 'hangman' && p[k].guessed && !Array.isArray(p[k].guessed)) S[k].guessed = [];
+        } else {
+          S[k] = p[k];
+        }
+      });
+    }catch(e){ console.error('Parse error', e); }
+  }
+
+  applyTheme(S.settings.theme || 'dark');
+
+  if (!history.state) history.replaceState({page: 'home'}, '', '#home');
+
+  window.addEventListener('popstate', (e) => {
+    const state = e.state || {page: 'home'};
+    if (modalDepth > 0) {
+      closeAllModals();
+      if (state.page && state.page !== currentPage) goPage(state.page, null, true);
+      return;
+    }
+    if (state.page && state.page !== currentPage) goPage(state.page, null, true);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalDepth > 0) {
+      e.preventDefault();
+      closeModal();
+    }
+  });
+
+  integrityCheck();
+  // Save device ID persistently
+  if (!localStorage.getItem('loveos_device_id')) {
+    localStorage.setItem('loveos_device_id', S.deviceId);
+  }
+  if(!S.setup){ showSetup(); return; }
+  startApp();
+}
+
+function showSetup(){
+  document.getElementById('setupScreen').style.display = 'flex';
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('sDate').value = fmtDate(new Date());
+  updateStepInd();
+}
+
+function updateStepInd(){
+  document.querySelectorAll('.step-dot').forEach((d,i) => d.classList.toggle('active', i+1 === currentStep));
+}
+
+function nextStep(n){
+  if(n === 2 && (!document.getElementById('sName1').value.trim() || !document.getElementById('sName2').value.trim())){
+    showToast('Введи имена!'); return;
+  }
+  if(n === 3 && !document.getElementById('sDate').value){
+    showToast('Выбери дату!'); return;
+  }
+  document.getElementById('step' + currentStep).style.display = 'none';
+  currentStep = n;
+  document.getElementById('step' + n).style.display = 'block';
+  updateStepInd();
+}
+
+function finishSetup(){
+  S.setup = true;
+  S.me.name = document.getElementById('sName1').value.trim() || 'Я';
+  S.partner.name = document.getElementById('sName2').value.trim() || 'Партнёр';
+  S.startDate = document.getElementById('sDate').value;
+  S.myRole = document.getElementById('sRole').value || 'me';
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  saveLocal(); startApp();
+}
+
+function startApp(){
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  applyTheme(S.settings.theme || 'dark');
+
+  if(S.meetingDate) {
+    const d = new Date(S.meetingDate);
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('meetDate').value = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  requestAnimationFrame(() => {
+    initTTT();
+    initHangman();
+  });
+
+  renderAll();
+
+  _intervals.forEach(clearInterval);
+  _intervals = [];
+  _intervals.push(setInterval(() => { renderTimer(); updateMeeting(); }, 1000));
+  _intervals.push(setInterval(() => { if(isOnline) ping(); }, 10000));
+
+  let lastDate = new Date().toDateString();
+  _intervals.push(setInterval(() => {
+    const now = new Date().toDateString();
+    if (now !== lastDate) { lastDate = now; renderCycle(); checkPeriodNotifications(); }
+  }, 60000));
+
+  checkPeriodNotifications();
+  _intervals.push(setInterval(checkPeriodNotifications, 6 * 60 * 60 * 1000));
+
+  if (S.settings.syncEnabled) {
+    loadFirebaseAndConnect();
+  }
+
+  const ci = document.getElementById('chatInput');
+  if(ci){
+    ci.addEventListener('input', function(){
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    });
+    ci.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' && !e.shiftKey && !e.isComposing){
+        e.preventDefault(); sendChat();
+      }
+    });
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window._deferredInstall = e;
+    const btn = document.getElementById('installBtn');
+    if (btn) btn.style.display = 'block';
+  });
+}
+
+function trimHistory() {
+  let changed = false;
+  if(S.chat.length > MAX_CHAT) { S.chat = S.chat.slice(-MAX_CHAT); changed = true; }
+  if(S.hearts.length > MAX_HEARTS) { S.hearts = S.hearts.slice(-MAX_HEARTS); changed = true; }
+  if(S.wishes.length > 200) { S.wishes = S.wishes.slice(-200); changed = true; }
+  if(S.tasks.length > 200) { S.tasks = S.tasks.slice(-200); changed = true; }
+  if(S.notes.length > 200) { S.notes = S.notes.slice(-200); changed = true; }
+  if(S.savings.length > 200) { S.savings = S.savings.slice(-200); changed = true; }
+  if(S.capsules.length > 200) { S.capsules = S.capsules.slice(-200); changed = true; }
+  return changed;
+}
+
+// Deduplicated save with debounce
+let _saveTimer = null;
+function scheduleSave() {
+  if (_saveTimer) clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(() => {
+    _saveTimer = null;
+    saveLocal();
+    scheduleFbPush();
+  }, 500);
+}
+
+function saveLocal() {
+  S.lastSync = Date.now();
+  trimHistory();
+  localStorage.setItem(LS_KEY, JSON.stringify(S));
+}
+
+// Legacy save() for compatibility
+function save() {
+  scheduleSave();
+}
+
+let _fbPushTimer = null;
+function scheduleFbPush() {
+  if(!db || !S.settings.syncEnabled) return;
+  if(_fbPushTimer) clearTimeout(_fbPushTimer);
+  _fbPushTimer = setTimeout(() => {
+    _fbPushTimer = null;
+    fbPush();
+  }, 1500);
+}
+
+function fbPush(){
+  if(!db || !S.settings.syncEnabled) return;
+  const root = db.ref('loveos_shared');
+  const updates = {};
+
+  // Store profiles by device ID to avoid role conflicts
+  updates['profiles/' + S.deviceId] = { role: S.myRole, ...S.me };
+  // Also store partner info for quick access
+  updates['partnerInfo/' + S.deviceId] = { role: S.myRole === 'me' ? 'partner' : 'me', name: S.partner.name, avatar: S.partner.avatar };
+  updates['startDate'] = S.startDate;
+  updates['config'] = { theme: S.settings.theme || 'dark' };
+  updates['hearts'] = S.hearts;
+  updates['ttt'] = S.ttt;
+  updates['_sync/lastPush'] = Date.now();
+
+  S.wishes.forEach(w => { updates['wishes/' + w.id] = w; });
+  S.tasks.forEach(t => { updates['tasks/' + t.id] = t; });
+  S.notes.forEach(n => { updates['notes/' + n.id] = n; });
+  S.savings.forEach(s => { updates['savings/' + s.id] = s; });
+  S.capsules.forEach(c => { updates['capsules/' + c.id] = c; });
+
+  updates['cycle/config'] = {
+    length: S.cycle.length,
+    periodLength: S.cycle.periodLength,
+    lastPeriod: S.cycle.lastPeriod
+  };
+  S.cycle.periods.forEach(p => { updates['cycle/periods/' + p] = true; });
+  Object.entries(S.cycle.days).forEach(([date, data]) => {
+    updates['cycle/days/' + date] = data;
+  });
+
+  root.update(updates)
+    .then(() => { setSyncUI(true); })
+    .catch(err => {
+      console.error('Firebase push error:', err);
+      setSyncUI(false);
+      showToast('⚠️ Ошибка синхронизации. Сохранено локально.');
+      // Schedule retry
+      setTimeout(() => { if (isOnline) scheduleFbPush(); }, 30000);
+    });
+}
+
+function resetAll() {
+  if(!confirm('Удалить ВСЕ данные? Это действие нельзя отменить.')) return;
+
+  _intervals.forEach(clearInterval);
+  _intervals = [];
+
+  // Clear IndexedDB queues
+  try {
+    indexedDB.deleteDatabase('loveos-sync');
+  } catch(e) { console.warn('IndexedDB cleanup failed', e); }
+
+  cleanupFirebase().then(() => {
+    localStorage.removeItem(LS_KEY);
+    location.reload();
+  });
+}
+
+function clearCycleData() {
+  if(!confirm('Очистить все данные цикла (периоды, дни, симптомы)?')) return;
+  S.cycle = { length: 28, periodLength: 5, lastPeriod: '', periods: [], days: {}, symptoms: {} };
+  _cachedAvgCycle = null;
+  _cachedAvgPeriod = null;
+  scheduleSave();
+  renderCycle();
+  showToast('🩸 Данные цикла очищены');
+}
+
+// ==================== LAZY FIREBASE LOADING ====================
+let _fbLoading = false;
+function loadFirebaseAndConnect() {
+  if (fbApp || _fbLoading) return;
+  _fbLoading = true;
+
+  const scripts = [
+    'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
+    'https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js'
+  ];
+
+  let loaded = 0;
+  scripts.forEach(src => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = () => {
+      loaded++;
+      if (loaded === scripts.length) {
+        _fbLoading = false;
+        connectFB();
+      }
+    };
+    s.onerror = () => {
+      _fbLoading = false;
+      showToast('❌ Ошибка загрузки Firebase');
+    };
+    s.onabort = () => { _fbLoading = false; };
+    document.head.appendChild(s);
+  });
+}
+
+// ==================== FIREBASE ====================
+async function cleanupFirebase() {
+  return new Promise(resolve => {
+    _fbRefs.forEach(r => { try { r.off(); } catch(e) {} });
+    _fbRefs = [];
+    if (fbApp) {
+      fbApp.delete().then(() => { fbApp = null; db = null; resolve(); }).catch(() => { fbApp = null; db = null; resolve(); });
+    } else resolve();
+  });
+}
+
+async function connectFB(){
+  if (!S.settings.syncEnabled) return;
+  try{
+    await cleanupFirebase();
+
+    try {
+      fbApp = firebase.app('lov3');
+    } catch (e) {
+      fbApp = firebase.initializeApp(FB_CFG, 'lov3');
+    }
+
+    db = firebase.database(fbApp);
+    // Enable offline persistence for Firebase RTDB
+    try {
+      await db.goOffline();
+      await db.goOnline();
+    } catch(e) { /* persistence may not be available in all environments */ }
+    await db.ref('.info/connected').once('value');
+
+    isOnline = true;
+    fbRetryCount = 0;
+    setSyncUI(true);
+
+    const shared = db.ref('loveos_shared');
+    _fbRefs.push(shared);
+
+    const connectedRef = db.ref('.info/connected');
+    connectedRef.on('value', snap => {
+      isOnline = !!snap.val();
+      setSyncUI(isOnline);
+      if (isOnline) {
+        ping();
+        scheduleFbPush();
+      }
+    });
+    _fbRefs.push(connectedRef);
+
+    // Listen for all profiles and find the one that belongs to partner
+    shared.child('profiles').on('value', snap => {
+      const profiles = snap.val();
+      if (!profiles) return;
+      // Find partner's profile (not ours)
+      Object.entries(profiles).forEach(([devId, profile]) => {
+        if (devId !== S.deviceId && profile && profile.role) {
+          // This is partner's device
+          const partnerRole = profile.role;
+          if (partnerRole === 'me') {
+            S.partner = {...S.partner, ...profile, role: undefined};
+          } else {
+            S.me = {...S.me, ...profile, role: undefined};
+          }
+          saveLocal();
+          if(shouldRenderPage('profiles')) renderProfiles();
+        }
+      });
+    });
+    // Also listen for partner info updates
+    shared.child('partnerInfo').on('value', snap => {
+      const infos = snap.val();
+      if (!infos) return;
+      Object.entries(infos).forEach(([devId, info]) => {
+        if (devId !== S.deviceId && info) {
+          if (info.role === 'me') {
+            S.partner.name = info.name || S.partner.name;
+            S.partner.avatar = info.avatar || S.partner.avatar;
+          } else {
+            S.me.name = info.name || S.me.name;
+            S.me.avatar = info.avatar || S.me.avatar;
+          }
+          saveLocal();
+          if(shouldRenderPage('profiles')) renderProfiles();
+        }
+      });
+    });
+    shared.child('startDate').on('value', snap => {
+      if(snap.val()) { S.startDate = snap.val(); saveLocal(); renderTimer(); }
+    });
+    shared.child('config').on('value', snap => {
+      const v = snap.val();
+      if(v && v.theme !== undefined) { S.settings.theme = v.theme; applyTheme(S.settings.theme); saveLocal(); }
+    });
+
+    setupCollectionSync(shared.child('wishes'), S.wishes, 'id');
+    setupCollectionSync(shared.child('tasks'), S.tasks, 'id');
+    setupCollectionSync(shared.child('notes'), S.notes, 'id');
+    setupCollectionSync(shared.child('savings'), S.savings, 'id');
+    setupCollectionSync(shared.child('capsules'), S.capsules, 'id');
+
+    shared.child('cycle/config').on('value', snap => {
+      const v = snap.val();
+      if(v) {
+        S.cycle = {...S.cycle, ...v};
+        if(!S.cycle.days) S.cycle.days = {};
+        _cachedAvgCycle = null;
+        _cachedAvgPeriod = null;
+        saveLocal(); renderCycle();
+      }
+    });
+    shared.child('cycle/periods').on('child_added', snap => {
+      const date = snap.key;
+      if(!S.cycle.periods.includes(date)) { S.cycle.periods.push(date); S.cycle.periods.sort(); _cachedAvgCycle = null; saveLocal(); renderCycle(); }
+    });
+    shared.child('cycle/periods').on('child_removed', snap => {
+      S.cycle.periods = S.cycle.periods.filter(d => d !== snap.key);
+      _cachedAvgCycle = null;
+      saveLocal(); renderCycle();
+    });
+    shared.child('cycle/days').on('child_added', snap => {
+      S.cycle.days[snap.key] = snap.val();
+      saveLocal(); renderCycle();
+    });
+    shared.child('cycle/days').on('child_changed', snap => {
+      S.cycle.days[snap.key] = snap.val();
+      saveLocal(); renderCycle();
+    });
+    shared.child('cycle/days').on('child_removed', snap => {
+      delete S.cycle.days[snap.key];
+      saveLocal(); renderCycle();
+    });
+
+    const tttRef = shared.child('ttt');
+    _fbRefs.push(tttRef);
+    tttRef.on('value', snap => {
+      const t = snap.val();
+      if(t && t.lastSender !== S.myRole){ S.ttt = t; saveLocal(); renderTTT(); }
+    });
+
+    shared.child('hearts').on('value', snap => {
+      const v = snap.val();
+      if(v && Array.isArray(v)) { S.hearts = v; saveLocal(); }
+    });
+
+    const chatRef = shared.child('chat');
+    _fbRefs.push(chatRef);
+    chatRef.once('value', snap => {
+      const all = snap.val();
+      if (all) {
+        const arr = Object.values(all).filter(m => m && typeof m === 'object' && m.id && m.ts);
+        S.chat = mergeArrays(S.chat, arr, 'id', 'ts');
+        saveLocal();
+        if(shouldRenderPage('chat')) renderChatImmediate();
+      }
+      chatRef.orderByChild('ts').startAt(Date.now() - 86400000).on('child_added', snap => {
+        const msg = snap.val();
+        if(msg && msg.id && !S.chat.find(m => m.id === msg.id)){
+          S.chat.push(msg);
+          S.chat.sort((a,b) => a.ts - b.ts);
+          trimHistory();
+          saveLocal();
+          if(!document.getElementById('page-chat').classList.contains('active')) {
+            showToast('💬 Новое сообщение');
+          } else {
+            renderChat();
+          }
+        }
+      });
+    });
+
+    const presRef = shared.child('presence');
+    _fbRefs.push(presRef);
+    presRef.on('value', snap => {
+      const v = snap.val();
+      const partnerRole = S.myRole === 'me' ? 'partner' : 'me';
+      const on = v && v[partnerRole] && (Date.now() - v[partnerRole]) < 15000;
+      const ponline = document.getElementById('ponline');
+      if(ponline) ponline.classList.toggle('on', on);
+    });
+
+    scheduleFbPush();
+
+  }catch(e){
+    console.error('Firebase error:', e);
+    isOnline = false; setSyncUI(false);
+    if (fbRetryCount < MAX_FB_RETRIES) {
+      fbRetryCount++;
+      setTimeout(connectFB, Math.pow(2, fbRetryCount) * 1000);
+    }
+  }
+}
+
+function setupCollectionSync(ref, localArray, keyField) {
+  _fbRefs.push(ref);
+  ref.on('child_added', snap => {
+    const val = snap.val();
+    if(!val || !val[keyField]) return;
+    const idx = localArray.findIndex(x => x[keyField] === val[keyField]);
+    if(idx === -1) {
+      localArray.push(val);
+      saveLocal();
+      renderAllDebounced();
+    }
+  });
+  ref.on('child_changed', snap => {
+    const val = snap.val();
+    if(!val || !val[keyField]) return;
+    const idx = localArray.findIndex(x => x[keyField] === val[keyField]);
+    if(idx !== -1) {
+      localArray[idx] = val;
+      saveLocal();
+      renderAllDebounced();
+    }
+  });
+  ref.on('child_removed', snap => {
+    const key = snap.key;
+    const idx = localArray.findIndex(x => x[keyField] === key);
+    if(idx !== -1) {
+      localArray.splice(idx, 1);
+      saveLocal();
+      renderAllDebounced();
+    }
+  });
+}
+
+function mergeArrays(local, remote, keyField, sortField) {
+  const map = new Map();
+  local.forEach(x => map.set(x[keyField], x));
+  remote.forEach(x => {
+    const existing = map.get(x[keyField]);
+    if (!existing || (x[sortField] > existing[sortField])) {
+      map.set(x[keyField], x);
+    }
+  });
+  return Array.from(map.values());
+}
+
+
+function mergeRemote(remoteData) {
+  if (!remoteData) return;
+  if (remoteData.me) S.me = {...S.me, ...remoteData.me};
+  if (remoteData.partner) S.partner = {...S.partner, ...remoteData.partner};
+  if (remoteData.startDate) S.startDate = remoteData.startDate;
+  if (remoteData.config && remoteData.config.theme) {
+    S.settings.theme = remoteData.config.theme;
+    applyTheme(S.settings.theme);
+  }
+  if (remoteData.hearts && Array.isArray(remoteData.hearts)) S.hearts = remoteData.hearts;
+  if (remoteData.ttt) S.ttt = remoteData.ttt;
+  if (remoteData.wishes) {
+    const wishesArr = Object.values(remoteData.wishes).filter(w => w && w.id);
+    S.wishes = mergeArrays(S.wishes, wishesArr, 'id', 'ts');
+  }
+  if (remoteData.tasks) {
+    const tasksArr = Object.values(remoteData.tasks).filter(t => t && t.id);
+    S.tasks = mergeArrays(S.tasks, tasksArr, 'id', 'ts');
+  }
+  if (remoteData.notes) {
+    const notesArr = Object.values(remoteData.notes).filter(n => n && n.id);
+    S.notes = mergeArrays(S.notes, notesArr, 'id', 'ts');
+  }
+  if (remoteData.savings) {
+    const savingsArr = Object.values(remoteData.savings).filter(s => s && s.id);
+    S.savings = mergeArrays(S.savings, savingsArr, 'id', 'ts');
+  }
+  if (remoteData.capsules) {
+    const capsulesArr = Object.values(remoteData.capsules).filter(c => c && c.id);
+    S.capsules = mergeArrays(S.capsules, capsulesArr, 'id', 'ts');
+  }
+  if (remoteData.cycle) {
+    if (remoteData.cycle.config) {
+      S.cycle.length = remoteData.cycle.config.length || S.cycle.length;
+      S.cycle.periodLength = remoteData.cycle.config.periodLength || S.cycle.periodLength;
+      S.cycle.lastPeriod = remoteData.cycle.config.lastPeriod || S.cycle.lastPeriod;
+    }
+    if (remoteData.cycle.periods) {
+      const periods = Object.keys(remoteData.cycle.periods).filter(p => /^\d{4}-\d{2}-\d{2}$/.test(p));
+      S.cycle.periods = [...new Set([...S.cycle.periods, ...periods])].sort();
+    }
+    if (remoteData.cycle.days) {
+      Object.entries(remoteData.cycle.days).forEach(([date, data]) => {
+        S.cycle.days[date] = data;
+      });
+    }
+    invalidateCycleCache();
+  }
+  if (remoteData.chat) {
+    const chatArr = Object.values(remoteData.chat).filter(m => m && m.id && m.ts);
+    S.chat = mergeArrays(S.chat, chatArr, 'id', 'ts');
+  }
+  saveLocal();
+  renderAll();
+}
+
+function forceSync(){
+  if(!S.settings.syncEnabled){ showToast('Синхронизация отключена'); return; }
+  if(!db){ showToast('Нет подключения'); return; }
+  showToast('🔄 Синхронизация...');
+  fbPush();
+  db.ref('loveos_shared').once('value').then(snap => {
+    const fd = snap.val();
+    if(fd) mergeRemote(fd);
+    showToast('✅ Синхронизировано');
+  }).catch(err => {
+    console.error('forceSync error', err);
+    showToast('⚠️ Ошибка синхронизации');
+  });
+}
+
+function setSyncUI(on){
+  const dot = document.getElementById('sdot');
+  const text = document.getElementById('stext');
+  if (dot) dot.className = 'sync-dot ' + (on ? 'on' : 'off');
+  if (text) text.textContent = on ? 'Синхронизировано ✓' : 'Offline';
+}
+
+function ping(){
+  if(db && S.settings.syncEnabled) db.ref('loveos_shared/presence/' + S.myRole).set(Date.now());
+}
+
+// ==================== SYNC SETTINGS ====================
+async function toggleSyncSetting() {
+  const wasEnabled = S.settings.syncEnabled;
+  S.settings.syncEnabled = !wasEnabled;
+  document.getElementById('syncToggle').classList.toggle('on', S.settings.syncEnabled);
+  document.getElementById('syncPanel').style.display = S.settings.syncEnabled ? 'block' : 'none';
+
+  if (S.settings.syncEnabled) {
+    if (!S.settings.partnerCode) {
+      const code = generatePartnerCode();
+      S.settings.partnerCode = code;
+      document.getElementById('syncCodeDisplay').textContent = 'Ваш код: ' + code;
+      showToast('🔗 Синхронизация включена. Код: ' + code);
+    } else {
+      document.getElementById('syncCodeDisplay').textContent = 'Ваш код: ' + S.settings.partnerCode;
+    }
+    loadFirebaseAndConnect();
+  } else {
+    S.settings.partnerCode = null;
+    await cleanupFirebase();
+    isOnline = false;
+    showToast('🔗 Синхронизация отключена');
+  }
+  scheduleSave();
+}
+
+function toggleNotifSetting() {
+  S.settings.notifications = !S.settings.notifications;
+  document.getElementById('notifToggle').classList.toggle('on', S.settings.notifications);
+  if (S.settings.notifications && 'Notification' in window) {
+    Notification.requestPermission().then(p => {
+      if (p === 'granted') showToast('🔔 Уведомления включены');
+      else { S.settings.notifications = false; document.getElementById('notifToggle').classList.remove('on'); }
+    });
+  }
+  scheduleSave();
+}
+
+function joinPartnerCode() {
+  const code = document.getElementById('partnerCodeInput').value.trim();
+  if (!code || code.length !== 6 || !/^\d{6}$/.test(code)) {
+    showToast('Введите 6-значный код'); return;
+  }
+  if (!db) {
+    showToast('Загрузка Firebase...');
+    loadFirebaseAndConnect();
+    setTimeout(() => joinPartnerCode(), 2000);
+    return;
+  }
+  const pairRef = db.ref('loveos_pairs/' + code);
+  pairRef.set({
+    [S.myRole]: true,
+    created: Date.now()
+  }).then(() => {
+    S.settings.partnerCode = code;
+    S.settings.syncEnabled = true;
+    document.getElementById('syncCodeDisplay').textContent = 'Связано: ' + code;
+    document.getElementById('partnerCodeInput').value = '';
+    scheduleSave();
+    showToast('✅ Связь установлена');
+    forceSync();
+  }).catch(err => {
+    showToast('❌ Ошибка связи');
+  });
+}
+
+// ==================== NAVIGATION ====================
+const PAGE_TITLES = {
+  cycle: 'Цикл',
+  chat: 'Чат',
+  stuff: 'Желания',
+  notes: 'Заметки',
+  more: 'Ещё',
+  games: 'Игры',
+  profiles: 'Профили',
+  home: 'Главная'
+};
+
+function goPage(name, btn, noPush = false){
+  if (modalDepth > 0) closeAllModals();
+  const target = document.getElementById('page-' + name);
+  if(!target) return;
+  const isCurrentlyActive = target.classList.contains('active');
+  if(!isCurrentlyActive && !noPush) history.pushState({page: name}, '', '#' + name);
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  target.classList.add('active');
+  currentPage = name;
+
+  const titleEl = document.getElementById('pageTitle');
+  if (titleEl) titleEl.textContent = PAGE_TITLES[name] || 'LoveOS';
+
+  const fab = document.getElementById('fabBtn');
+  if (fab) {
+    if (name === 'cycle' || name === 'stuff' || name === 'notes') {
+      fab.style.display = 'flex';
+    } else {
+      fab.style.display = 'none';
+    }
+  }
+
+  if(btn) btn.classList.add('active');
+  else {
+    const foundBtn = Array.from(document.querySelectorAll('.nb')).find(b => b.getAttribute('onclick')?.includes(`'${name}'`));
+    if(foundBtn) foundBtn.classList.add('active');
+  }
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  renderAll();
+}
+
+function handleFab() {
+  if (currentPage === 'cycle') {
+    markPeriod();
+  } else if (currentPage === 'stuff') {
+    const wishesVisible = document.getElementById('stuff-wishes').style.display !== 'none';
+    const tasksVisible = document.getElementById('stuff-tasks').style.display !== 'none';
+    if (wishesVisible) openModal('wish');
+    else if (tasksVisible) openModal('task');
+    else openModal('saving');
+  } else if (currentPage === 'notes') {
+    openModal('note');
+  }
+}
+
+// ==================== RENDERERS ====================
+function shouldRenderPage(pageId) {
+  const page = document.getElementById('page-' + pageId);
+  return page && page.classList.contains('active');
+}
+
+const renderAllDebounced = debounce(function() {
+  renderTimer(); updateMeeting();
+  if (shouldRenderPage('profiles')) { renderProfiles(); renderMood(); }
+  if (shouldRenderPage('stuff')) {
+    if (document.getElementById('stuff-wishes').style.display !== 'none') renderWishes();
+    if (document.getElementById('stuff-tasks').style.display !== 'none') renderTasks();
+    if (document.getElementById('stuff-savings').style.display !== 'none') renderSavings();
+  }
+  if (shouldRenderPage('notes')) renderNotes();
+  if (shouldRenderPage('cycle')) renderCycle();
+  if (shouldRenderPage('games')) { renderTTT(); renderHangman(); }
+  if (shouldRenderPage('chat')) renderChat();
+  if (shouldRenderPage('home')) { renderTimer(); }
+}, 300);
+
+function renderAll() { renderAllDebounced(); }
+
+function getMe() { return S.myRole === 'me' ? S.me : S.partner; }
+function getPartner() { return S.myRole === 'me' ? S.partner : S.me; }
+
+function renderHeader() {}
+
+// ==================== TIMER ====================
+function renderTimer(){
+  if(!S.startDate) return;
+  // Parse date in local timezone for accurate day counting
+  const [sy, sm, sd] = S.startDate.split('-').map(Number);
+  const startD = new Date(sy, sm - 1, sd);
+  const nowD = new Date();
+
+  if(nowD < startD){
+    document.getElementById('th-days').textContent = '0';
+    document.getElementById('th-sub').textContent = 'Дата в будущем';
+    document.getElementById('t-h').textContent = '0';
+    document.getElementById('t-m').textContent = '0';
+    document.getElementById('t-s').textContent = '0';
+    return;
+  }
+
+  let cursor = new Date(startD);
+  let y = 0, m = 0;
+
+  while (true) {
+    let next = new Date(cursor);
+    next.setFullYear(next.getFullYear() + 1);
+    if (cursor.getMonth() === 1 && cursor.getDate() === 29 && next.getMonth() !== 1) next.setDate(0);
+    if (next > nowD) break;
+    cursor = next; y++;
+  }
+
+  while (true) {
+    let next = new Date(cursor);
+    const expectedMonth = (next.getMonth() + 1) % 12;
+    next.setMonth(next.getMonth() + 1);
+    if (next.getMonth() !== expectedMonth) next.setDate(0);
+    if (next > nowD) break;
+    cursor = next; m++;
+  }
+
+  const d = Math.floor((nowD - cursor) / 86400000);
+  const diffMs = nowD - startD;
+  const td = Math.floor(diffMs / 86400000);
+  const s = Math.floor(diffMs / 1000), mins = Math.floor(s / 60), h = Math.floor(mins / 60);
+
+  document.getElementById('th-days').textContent = td;
+  document.getElementById('th-sub').textContent = `${y} лет, ${m} мес, ${d} дн`;
+  document.getElementById('t-h').textContent = h % 24;
+  document.getElementById('t-m').textContent = mins % 60;
+  document.getElementById('t-s').textContent = s % 60;
+}
+
+function updateMeeting(){
+  const grid = document.getElementById('meetGrid'), done = document.getElementById('meetDone');
+  if(!S.meetingDate){ grid.style.display = 'none'; done.style.display = 'none'; return; }
+  const diff = S.meetingDate - Date.now();
+  if(diff <= 0){ grid.style.display = 'none'; done.style.display = 'block'; return; }
+  grid.style.display = 'grid'; done.style.display = 'none';
+  const d = Math.floor(diff / 86400000), h = Math.floor((diff % 86400000) / 3600000), m = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('md-d').textContent = d;
+  document.getElementById('md-h').textContent = h;
+  document.getElementById('md-m').textContent = m;
+}
+
+function saveMeeting(){
+  const val = document.getElementById('meetDate').value;
+  if (!val) { S.meetingDate = ''; scheduleSave(); updateMeeting(); return; }
+  const [datePart, timePart] = val.split('T');
+  const [y, mo, day] = datePart.split('-').map(Number);
+  const [h, mi] = timePart.split(':').map(Number);
+  S.meetingDate = new Date(y, mo - 1, day, h, mi).getTime();
+  scheduleSave(); updateMeeting();
+}
+
+function sendHeart(e){
+  spawnHearts(8);
+  safeVibrate(50);
+  S.hearts.push({sender: S.myRole, ts: Date.now()});
+  scheduleSave(); showToast('💓 Сердечко отправлено!');
+}
+
+function spawnHearts(n){
+  const layer = document.getElementById('hlayer'), em = ['💕','💖','💗','💓','💝','❤️','🌸','✨'];
+  for(let i = 0; i < n; i++){
+    setTimeout(() => {
+      const el = document.createElement('div'); el.className = 'fheart';
+      el.textContent = em[Math.floor(Math.random() * em.length)];
+      el.style.left = (10 + Math.random() * 80) + '%';
+      el.style.fontSize = (1.2 + Math.random() * 1.4) + 'rem';
+      el.style.animationDuration = (3.5 + Math.random() * 2) + 's';
+      layer.appendChild(el);
+      setTimeout(() => el.remove(), 6000);
+    }, i * 200);
+  }
+}
+
+function renderProfiles(){
+  const me = getMe();
+  const partner = getPartner();
+  document.getElementById('pa1').textContent = me.avatar;
+  document.getElementById('pn1').textContent = me.name;
+  document.getElementById('pt1').textContent = me.color || '❤️';
+  document.getElementById('pa2').textContent = partner.avatar;
+  document.getElementById('pn2').textContent = partner.name;
+  document.getElementById('pt2').textContent = partner.color || '💙';
+}
+
+// ==================== CHAT (Virtualized) ====================
+function renderChat(){
+  if (chatRenderPending) return;
+  chatRenderPending = true;
+  requestAnimationFrame(() => {
+    chatRenderPending = false;
+    renderChatImmediate();
+  });
+}
+
+function renderChatImmediate(){
+  const box = document.getElementById('chatBox');
+  if(!S.chat.length){ box.innerHTML = '<div class="empty">Напишите первое сообщение 💌</div>'; return; }
+
+  const total = S.chat.length;
+  const visible = S.chat.slice(Math.max(0, total - chatVisibleCount));
+  const isNearBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 50;
+
+  const frag = document.createDocumentFragment();
+
+  if (total > chatVisibleCount) {
+    const loadMore = document.createElement('div');
+    loadMore.style.cssText = 'text-align:center;padding:8px;';
+    loadMore.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="loadMoreChat()">⬆ Загрузить ранее (${total - chatVisibleCount} сообщ.)</button>`;
+    frag.appendChild(loadMore);
+  }
+
+    visible.forEach(m => {
+    const isMe = m.sender === S.myRole;
+    const sender = m.sender === 'me' ? S.me : S.partner;
+    const t = new Date(m.ts).toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit'});
+    const statusIcon = isMe ? (m._status === 'pending' ? '⏳' : m._status === 'failed' ? '❌' : '✓') : '';
+    const retryBtn = isMe && m._status === 'failed' ? `<button onclick="retryMessage('${escAttr(m.id)}')" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:.75rem;margin-left:4px;">⟳ Повторить</button>` : '';
+    const div = document.createElement('div');
+    div.className = 'msg ' + (isMe ? 'me' : 'partner');
+    div.innerHTML = `<div style="font-weight:700;font-size:.75rem;opacity:.85;margin-bottom:2px;">${esc(sender.avatar)} ${esc(sender.name)}</div><div>${esc(m.text)}</div><div class="msg-time">${esc(t)} ${statusIcon}${retryBtn}</div>`;
+    frag.appendChild(div);
+  });
+
+  box.innerHTML = '';
+  box.appendChild(frag);
+
+  if(isNearBottom) box.scrollTop = box.scrollHeight;
+}
+
+function loadMoreChat() {
+  chatVisibleCount = Math.min(S.chat.length, chatVisibleCount + VISIBLE_BATCH);
+  renderChatImmediate();
+}
+
+function retryMessage(id) {
+  const msg = S.chat.find(m => m.id === id);
+  if (!msg || msg._status !== 'failed') return;
+  msg._status = 'pending';
+  saveLocal(); renderChat();
+  if(db && S.settings.syncEnabled) {
+    db.ref('loveos_shared/chat').push(msg)
+      .then(() => {
+        const local = S.chat.find(m => m.id === id);
+        if(local) { local._status = 'delivered'; saveLocal(); renderChat(); }
+      })
+      .catch(() => {
+        const local = S.chat.find(m => m.id === id);
+        if(local) { local._status = 'failed'; saveLocal(); renderChat(); }
+      });
+  }
+}
+
+function sendChat(){
+  const inp = document.getElementById('chatInput'), txt = inp.value.trim();
+  if(!txt) return;
+
+  const msg = {id: generateId(), sender: S.myRole, text: txt, ts: Date.now(), _status: 'pending'};
+  S.chat.push(msg);
+  inp.value = ''; inp.style.height = 'auto';
+  saveLocal(); renderChatImmediate();
+  if(db && S.settings.syncEnabled) {
+    db.ref('loveos_shared/chat').push(msg)
+      .then(() => {
+        const local = S.chat.find(m => m.id === msg.id);
+        if(local) { local._status = 'delivered'; saveLocal(); renderChat(); }
+      })
+      .catch(() => {
+        const local = S.chat.find(m => m.id === msg.id);
+        if(local) { local._status = 'failed'; saveLocal(); renderChat(); }
+      });
+  }
+}
+
+// ==================== WISHES (Virtualized) ====================
+function renderWishes(){
+  const el = document.getElementById('wishesList'), cats = {travel:'✈️ Путешествие', gift:'🎁 Подарок', experience:'🌟 Опыт', other:'📦 Другое'};
+  if(!S.wishes.length){ el.innerHTML = '<div class="empty">Желаний пока нет</div>'; return; }
+
+  const doneCount = S.wishes.filter(w => w.done).length;
+  const total = S.wishes.length;
+  const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+
+  const frag = document.createDocumentFragment();
+
+  const progress = document.createElement('div');
+  progress.style.cssText = 'margin-bottom:16px;';
+  progress.innerHTML = `
+    <div style="display:flex;justify-content:space-between;font-size:.85rem;color:var(--text-secondary);margin-bottom:6px;">
+      <span>Выполнено ${doneCount} из ${total}</span><span>${pct}%</span>
+    </div>
+    <div style="height:4px;background:var(--bg-secondary);border-radius:2px;overflow:hidden;">
+      <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--accent-secondary));border-radius:2px;transition:.6s;"></div>
+    </div>`;
+  frag.appendChild(progress);
+
+  const sorted = [...S.wishes].sort((a,b) => Number(a.done) - Number(b.done));
+  const visible = sorted.slice(0, wishesVisibleCount);
+
+  visible.forEach(w => {
+    const div = document.createElement('div');
+    div.className = 'wish ' + (w.done ? 'done' : '');
+    div.innerHTML = `
+      <div class="wcheck ${w.done ? 'ok' : ''}" onclick="togWish('${escAttr(w.id)}')">${w.done ? '✓' : ''}</div>
+      <div style="flex:1;" onclick="editWish('${escAttr(w.id)}')">
+        <div class="wish-text">${esc(w.text)}</div>
+        <div class="wish-meta">${w.date ? new Date(w.date).toLocaleDateString('ru') : ''} <span class="cat-chip cat-${escAttr(w.category)}">${cats[w.category] || 'Другое'}</span></div>
+      </div>
+      <button class="del-btn" onclick="event.stopPropagation(); delWish('${escAttr(w.id)}')">🗑</button>`;
+    frag.appendChild(div);
+  });
+
+  if (sorted.length > wishesVisibleCount) {
+    const loadMore = document.createElement('div');
+    loadMore.style.cssText = 'text-align:center;padding:8px;';
+    loadMore.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="loadMoreWishes()">Показать ещё</button>`;
+    frag.appendChild(loadMore);
+  }
+
+  el.innerHTML = '';
+  el.appendChild(frag);
+}
+
+function loadMoreWishes() {
+  wishesVisibleCount = Math.min(S.wishes.length, wishesVisibleCount + VISIBLE_BATCH);
+  renderWishes();
+}
+
+function togWish(id){ const w = S.wishes.find(x => x.id === id); if(w){ w.done = !w.done; scheduleSave(); renderWishes(); } }
+function delWish(id){ 
+  S.wishes = S.wishes.filter(x => x.id !== id); 
+  scheduleSave(); renderWishes(); 
+  if(db && S.settings.syncEnabled) db.ref('loveos_shared/wishes/' + id).remove().catch(()=>{});
+}
+
+// ==================== TASKS (Virtualized) ====================
+function renderTasks(){
+  const el = document.getElementById('tasksList');
+  if(!S.tasks.length){ el.innerHTML = '<div class="empty">Задач нет</div>'; return; }
+
+  const frag = document.createDocumentFragment();
+  const visible = S.tasks.slice(0, tasksVisibleCount);
+
+  visible.forEach(t => {
+    const div = document.createElement('div');
+    div.className = 'wish ' + (t.done ? 'done' : '');
+    div.innerHTML = `
+      <div class="wcheck ${t.done ? 'ok' : ''}" onclick="togTask('${escAttr(t.id)}')">${t.done ? '✓' : ''}</div>
+      <div style="flex:1;">
+        <div class="wish-text">${esc(t.text)}</div>
+        <div class="wish-meta">${esc(t.deadline || '')} · ${t.owner === 'both' ? 'Вместе' : t.owner === 'me' ? 'Я' : 'Партнёр'}</div>
+      </div>
+      <button class="del-btn" onclick="delTask('${escAttr(t.id)}')">🗑</button>`;
+    frag.appendChild(div);
+  });
+
+  if (S.tasks.length > tasksVisibleCount) {
+    const loadMore = document.createElement('div');
+    loadMore.style.cssText = 'text-align:center;padding:8px;';
+    loadMore.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="loadMoreTasks()">Показать ещё</button>`;
+    frag.appendChild(loadMore);
+  }
+
+  el.innerHTML = '';
+  el.appendChild(frag);
+}
+
+function loadMoreTasks() {
+  tasksVisibleCount = Math.min(S.tasks.length, tasksVisibleCount + VISIBLE_BATCH);
+  renderTasks();
+}
+
+function togTask(id){ const t = S.tasks.find(x => x.id === id); if(t){ t.done = !t.done; scheduleSave(); renderTasks(); } }
+function delTask(id){ 
+  S.tasks = S.tasks.filter(x => x.id !== id); 
+  scheduleSave(); renderTasks(); 
+  if(db && S.settings.syncEnabled) db.ref('loveos_shared/tasks/' + id).remove().catch(()=>{});
+}
+
+// ==================== SAVINGS (Virtualized) ====================
+function renderSavings(){
+  const el = document.getElementById('savingsList');
+  if(!S.savings.length){ el.innerHTML = '<div class="empty">Копилок нет</div>'; return; }
+
+  const frag = document.createDocumentFragment();
+  const visible = S.savings.slice(0, savingsVisibleCount);
+
+  visible.forEach(s => {
+    const pct = s.goal > 0 ? Math.min(100, Math.round((s.current / s.goal) * 100)) : 0;
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.style.cssText = 'padding:14px;';
+    div.innerHTML = `
+      <div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px;"><span>${esc(s.name)}</span><span>${s.current}${esc(s.currency)} / ${s.goal}${esc(s.currency)}</span></div>
+      <div style="height:8px;background:var(--bg-secondary);border-radius:4px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--accent-secondary));border-radius:4px;transition:.6s;"></div></div>
+      <div style="text-align:center;font-size:.75rem;color:var(--text-secondary);margin-top:4px;">${pct}%</div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:8px;width:100%;" onclick="addFund('${escAttr(s.id)}')">+ Пополнить</button>`;
+    frag.appendChild(div);
+  });
+
+  if (S.savings.length > savingsVisibleCount) {
+    const loadMore = document.createElement('div');
+    loadMore.style.cssText = 'text-align:center;padding:8px;';
+    loadMore.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="loadMoreSavings()">Показать ещё</button>`;
+    frag.appendChild(loadMore);
+  }
+
+  el.innerHTML = '';
+  el.appendChild(frag);
+}
+
+function loadMoreSavings() {
+  savingsVisibleCount = Math.min(S.savings.length, savingsVisibleCount + VISIBLE_BATCH);
+  renderSavings();
+}
+
+function addFund(id){
+  const raw = prompt('Сколько добавить?');
+  if(raw === null) return;
+  const amount = parseFloat(raw.replace(',', '.'));
+  if(isNaN(amount) || amount <= 0){ showToast('Введите корректное число'); return; }
+  const s = S.savings.find(x => x.id === id);
+  if(s){ s.current = Number((Number(s.current) + amount).toFixed(2)); scheduleSave(); renderSavings(); if(s.current >= s.goal) showToast('🎉 Цель достигнута!'); }
+}
+
+// ==================== NOTES & CAPSULES (Virtualized) ====================
+function renderNotes(){
+  const el = document.getElementById('notesList'), now = Date.now();
+  let capsulesDirty = false;
+  S.capsules.forEach(c => {
+    if(!c.opened && now >= c.openAfter){ c.opened = true; capsulesDirty = true; }
+  });
+  if(capsulesDirty) { scheduleSave(); }
+
+  const all = [...S.notes, ...S.capsules.filter(c => c.opened || now >= c.openAfter).map(c => ({...c, isCapsule:true}))];
+  if(!all.length){ el.innerHTML = '<div class="empty">Заметок пока нет</div>'; return; }
+
+  const frag = document.createDocumentFragment();
+  const sorted = all.sort((a,b) => new Date(b.date || b.created) - new Date(a.date || a.created));
+  const visible = sorted.slice(0, notesVisibleCount);
+
+  visible.forEach(n => {
+    const div = document.createElement('div');
+    div.className = 'note ' + (n.isCapsule ? 'capsule' : '');
+    div.innerHTML = `
+      <div class="note-top">
+        <div class="note-author">${n.isCapsule ? '📬 Письмо из прошлого' : esc(n.author || 'Заметка')}</div>
+        <div class="note-date">${new Date(n.date || n.created).toLocaleDateString('ru')}</div>
+      </div>
+      <div style="font-size:.9rem;line-height:1.5;">${esc(n.text)}</div>
+      ${n.isCapsule ? `<div style="font-size:.7rem;color:var(--text-secondary);margin-top:4px;">Написано: ${new Date(n.created).toLocaleDateString('ru')}</div>` : ''}
+      <button class="del-btn" style="margin-top:8px;width:auto;padding:4px 10px;font-size:.75rem;" onclick="delNote('${escAttr(n.id)}', ${!!n.isCapsule})">Удалить</button>`;
+    frag.appendChild(div);
+  });
+
+  if (sorted.length > notesVisibleCount) {
+    const loadMore = document.createElement('div');
+    loadMore.style.cssText = 'text-align:center;padding:8px;';
+    loadMore.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="loadMoreNotes()">Показать ещё</button>`;
+    frag.appendChild(loadMore);
+  }
+
+  el.innerHTML = '';
+  el.appendChild(frag);
+}
+
+function loadMoreNotes() {
+  notesVisibleCount = notesVisibleCount + VISIBLE_BATCH;
+  renderNotes();
+}
+
+function delNote(id, isCap){
+  if(isCap) {
+    S.capsules = S.capsules.filter(x => x.id !== id);
+    if(db && S.settings.syncEnabled) db.ref('loveos_shared/capsules/' + id).remove().catch(()=>{});
+  } else {
+    S.notes = S.notes.filter(x => x.id !== id);
+    if(db && S.settings.syncEnabled) db.ref('loveos_shared/notes/' + id).remove().catch(()=>{});
+  }
+  scheduleSave(); renderNotes();
+}
+
+// ==================== CYCLE (Cached) ====================
+function invalidateCycleCache() {
+  _cachedAvgCycle = null;
+  _cachedAvgPeriod = null;
+}
+
+function getAverageCycleLength() {
+  if (_cachedAvgCycle !== null) return _cachedAvgCycle;
+  if (!S.cycle.periods || S.cycle.periods.length < 2) {
+    _cachedAvgCycle = parseInt(S.cycle.length) || 28;
+    return _cachedAvgCycle;
+  }
+  const sorted = [...S.cycle.periods].sort();
+  let diffs = [];
+  for (let i = 1; i < sorted.length; i++) {
+    const d1 = new Date(sorted[i-1]), d2 = new Date(sorted[i]);
+    const diff = Math.floor((d2 - d1) / 86400000);
+    if (diff >= 14 && diff <= 45) diffs.push(diff);
+  }
+  if (diffs.length === 0) {
+    _cachedAvgCycle = parseInt(S.cycle.length) || 28;
+    return _cachedAvgCycle;
+  }
+  _cachedAvgCycle = Math.round(diffs.reduce((a, b) => a + b, 0) / diffs.length);
+  return _cachedAvgCycle;
+}
+
+function getAveragePeriodLength() {
+  if (_cachedAvgPeriod !== null) return _cachedAvgPeriod;
+  if (!S.cycle.periods || S.cycle.periods.length === 0 || !S.cycle.days) {
+    _cachedAvgPeriod = parseInt(S.cycle.periodLength) || 5;
+    return _cachedAvgPeriod;
+  }
+  const sorted = [...S.cycle.periods].sort();
+  let lengths = [];
+  for (const p of sorted) {
+    let len = 0;
+    const dt = new Date(p);
+    for (let i = 0; i < 15; i++) {
+      const dk = fmtDate(new Date(dt.getTime() + i * 86400000));
+      if (S.cycle.days[dk] && S.cycle.days[dk].phase === 'menstrual') len++;
+      else if (i > 0) break;
+    }
+    if (len > 0) lengths.push(len);
+  }
+  if (lengths.length === 0) {
+    _cachedAvgPeriod = parseInt(S.cycle.periodLength) || 5;
+    return _cachedAvgPeriod;
+  }
+  _cachedAvgPeriod = Math.round(lengths.reduce((a, b) => a + b, 0) / lengths.length);
+  return _cachedAvgPeriod;
+}
+
+function predictNextPeriods(count = 3) {
+  if (!S.cycle.periods || S.cycle.periods.length === 0) return [];
+  const sorted = [...S.cycle.periods].sort();
+  let cursor = new Date(sorted[sorted.length - 1]);
+  const avgLen = getAverageCycleLength();
+  let preds = [];
+  for (let i = 0; i < count; i++) {
+    cursor = new Date(cursor.getTime() + avgLen * 86400000);
+    preds.push(fmtDate(cursor));
+  }
+  return preds;
+}
+
+function getDayInfo(dateStr) {
+  if (!S.cycle.periods || S.cycle.periods.length === 0) {
+    return {phase: '', day: 0, fertility: 'none', advice: 'Отметьте первый день месячных для анализа'};
+  }
+  const sorted = [...S.cycle.periods].sort();
+  const dt = new Date(dateStr);
+  let lastP = null;
+  for (const p of sorted) { if (new Date(p) <= dt) lastP = p; }
+  if (!lastP) return {phase: '', day: 0, fertility: 'none', advice: 'Нет данных для дат до первой менструации'};
+
+  const lastDt = new Date(lastP);
+  const cycleDay = Math.floor((dt - lastDt) / 86400000);
+  const cycleDayNum = cycleDay + 1;
+  const pLen = getAveragePeriodLength(), avgLen = getAverageCycleLength();
+  const ovulationDay = Math.max(1, avgLen - 14);
+  let phase = '', fertility = '', advice = '';
+
+  if (cycleDayNum <= pLen) { phase = 'menstrual'; fertility = 'none'; advice = '🩸 Менструация: пейте тёплый чай, снизьте нагрузки, берегите себя.'; }
+  else if (cycleDayNum < ovulationDay) { phase = 'follicular'; fertility = 'low'; advice = '🌱 Энергия возвращается. Подходит для активных свиданий и новых начинаний.'; }
+  else if (cycleDayNum <= ovulationDay + 1) { phase = 'ovulation'; fertility = 'high'; advice = '🥚 Пик фертильности. Возможно повышение либидо. Идеальное время для близости.'; }
+  else { phase = 'luteal'; fertility = 'low'; advice = '🌕 Может появиться тяга к сладкому. Планируйте уютные вечера вдвоём.'; }
+
+  if (cycleDay >= avgLen - 3 && cycleDay < avgLen && cycleDay >= pLen) {
+    advice += ' Возможен ПМС: будьте нежны друг к другу.';
+  }
+  return {phase, day: cycleDayNum, fertility, advice};
+}
+
+function renderCycleInsights() {
+  const el = document.getElementById('cycle-insight'); 
+  if (!el) return;
+  if (!S.cycle.periods || S.cycle.periods.length === 0) { 
+    el.innerHTML = `<div class="card-title">🔮 Прогноз</div><div class="empty">Отметьте первый день месячных для анализа</div>`; 
+    return; 
+  }
+  const preds = predictNextPeriods(2);
+  const today = new Date();
+  const nextD = new Date(preds[0]);
+  const diff = Math.round((nextD - today) / 86400000);
+  let titleHtml = diff < 0 ? `<span style="color:var(--danger)">Задержка ${Math.abs(diff)} дн.</span>` : `${diff} дней до месячных`;
+
+  el.innerHTML = `
+    <div class="card-title">🔮 Прогноз</div>
+    <div style="font-size:1.4rem;font-weight:700;text-align:center;margin:10px 0;color:var(--accent);">${titleHtml}</div>
+    <div style="display:flex;justify-content:space-around;font-size:.85rem;color:var(--text-secondary);text-align:center;">
+      <div><div style="margin-bottom:2px;">Средний цикл</div><div style="font-weight:700;color:var(--text);font-size:1rem;">${getAverageCycleLength()} дн.</div></div>
+      <div><div style="margin-bottom:2px;">Следующие</div><div style="font-weight:700;color:var(--text);font-size:1rem;">${preds.map(p => new Date(p).toLocaleDateString('ru', {day:'numeric',month:'short'})).join(' и ')}</div></div>
+    </div>`;
+}
+
+function renderPhaseCard() {
+  const el = document.getElementById('cycle-phase-card'); 
+  if (!el) return;
+  const info = getDayInfo(fmtDate(new Date()));
+  if (!info.phase) { 
+    el.innerHTML = `<div class="card-title">🌙 Фаза цикла</div><div class="empty">${info.advice}</div>`; 
+    return; 
+  }
+  const names = {menstrual: 'Менструация', follicular: 'Фолликулярная', ovulation: 'Овуляция', luteal: 'Лютеиновая'};
+  const colors = {menstrual: 'var(--danger)', follicular: 'var(--success)', ovulation: 'var(--warning)', luteal: 'var(--accent-secondary)'};
+  const avgLen = getAverageCycleLength(), pct = Math.min(100, Math.max(0, (info.day / avgLen) * 100));
+
+  el.innerHTML = `
+    <div class="card-title">🌙 Фаза цикла</div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-weight:700;"><span style="color:${colors[info.phase]}">${names[info.phase]}</span><span>День ${info.day}</span></div>
+    <div style="height:8px;background:var(--bg-secondary);border-radius:4px;overflow:hidden;margin-bottom:12px;"><div style="height:100%;width:${pct}%;background:${colors[info.phase]};border-radius:4px;transition:.6s;"></div></div>
+    <div style="font-size:.85rem;line-height:1.4;color:var(--text-secondary);">${info.advice}</div>`;
+}
+
+function renderCycleHistory() {
+  const el = document.getElementById('cycle-history'); 
+  if (!el) return;
+  if (!S.cycle.periods || S.cycle.periods.length === 0) { 
+    el.innerHTML = '<div class="empty">Нет данных</div>'; 
+    return; 
+  }
+  const history = [...S.cycle.periods].sort().reverse().slice(0, 6);
+  el.innerHTML = history.map(d => `
+    <div class="wish">
+      <div style="flex:1;font-weight:700;">🩸 ${new Date(d).toLocaleDateString('ru', {day:'numeric', month:'long', year:'numeric'})}</div>
+      <button class="del-btn" onclick="delPeriod('${escAttr(d)}')">✕</button>
+    </div>`).join('');
+}
+
+function delPeriod(dateStr) {
+  if (!confirm('Удалить эту дату? Это также удалит связанные дни менструации.')) return;
+
+  const targetDate = new Date(dateStr);
+  const DAY = 86400000;
+  const daysToRemove = [];
+  const avgPeriodLen = getAveragePeriodLength();
+
+  // Find all menstrual days within average period length from target date
+  for (let i = 0; i < avgPeriodLen; i++) {
+    const checkDate = new Date(targetDate.getTime() + i * DAY);
+    const checkStr = fmtDate(checkDate);
+    if (S.cycle.days[checkStr] && S.cycle.days[checkStr].phase === 'menstrual') {
+      daysToRemove.push(checkStr);
+    }
+  }
+
+  // Remove from periods array
+  S.cycle.periods = S.cycle.periods.filter(d => !daysToRemove.includes(d));
+  S.cycle.periods.sort();
+  S.cycle.lastPeriod = S.cycle.periods.length ? S.cycle.periods[S.cycle.periods.length - 1] : '';
+
+  // Remove from days
+  daysToRemove.forEach(d => {
+    delete S.cycle.days[d];
+    if(db && S.settings.syncEnabled) {
+      db.ref('loveos_shared/cycle/days/' + d).remove().catch(()=>{});
+    }
+  });
+
+  invalidateCycleCache();
+  scheduleSave(); renderCycle();
+  if(db && S.settings.syncEnabled) {
+    db.ref('loveos_shared/cycle/periods/' + dateStr).remove().catch(()=>{});
+  }
+}
+
+function renderCycle(){
+  if (!S.cycle.periods) S.cycle.periods = [];
+  if (!S.cycle.days) S.cycle.days = {};
+
+  const yr = calDate.getFullYear(), mo = calDate.getMonth();
+  document.getElementById('calTitle').textContent = calDate.toLocaleString('ru', {month:'long', year:'numeric'});
+
+  const first = new Date(yr, mo, 1);
+  const last = new Date(yr, mo+1, 0);
+  const pad = first.getDay() === 0 ? 6 : first.getDay() - 1;
+
+  const pLen = getAveragePeriodLength(), avgLen = getAverageCycleLength(), DAY = 86400000;
+  const actualDates = new Set(), ovulDates = new Set();
+
+  S.cycle.periods.forEach(p => {
+    const d = new Date(p);
+    for (let i = 0; i < pLen; i++) actualDates.add(fmtDate(new Date(d.getTime() + i * DAY)));
+    const ovulationOffset = Math.min(Math.max(avgLen - 14, 7), 21);
+    ovulDates.add(fmtDate(new Date(d.getTime() + ovulationOffset * DAY)));
+  });
+
+  const preds = predictNextPeriods(6);
+
+  let html = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(d => `<div class="cal-dn">${d}</div>`).join('');
+  for(let i = 0; i < pad; i++) html += '<div></div>';
+
+  const todayStr = fmtDate(new Date());
+
+  for(let d = 1; d <= last.getDate(); d++){
+    const dt = new Date(yr, mo, d), dk = fmtDate(dt);
+    let cls = 'cal-d';
+    const dotColors = [];
+
+    if (actualDates.has(dk)) { cls += ' period'; dotColors.push('var(--danger)'); }
+    else if (ovulDates.has(dk)) cls += ' ovul';
+    if (dk === todayStr) cls += ' today';
+
+    const dayData = S.cycle.days[dk];
+    if (dayData) {
+      if (dayData.phase === 'menstrual') dotColors.push('var(--danger)');
+      if (dayData.symptoms && dayData.symptoms.length) dotColors.push('var(--accent)');
+      if (dayData.intimacy) dotColors.push('var(--success)');
+    }
+
+    const dots = dotColors.length > 0 ? `<div class="cdots">${dotColors.map(c => `<div class="cd" style="background:${c}"></div>`).join('')}</div>` : '';
+
+    html += `<div class="${cls}" onclick="openDayModal('${dk}')">${d}${dots}</div>`;
+  }
+
+  document.getElementById('calGrid').innerHTML = html;
+
+  const elDay = document.getElementById('cyDay'), elNext = document.getElementById('cyNext'), elPhase = document.getElementById('cyPhase');
+  if (elDay && elNext && elPhase) {
+    const info = getDayInfo(todayStr);
+    elDay.textContent = info.day || '—';
+    if(preds.length) {
+      const nextP = new Date(preds[0]);
+      const diff = Math.round((nextP - new Date()) / DAY);
+      elNext.textContent = diff < 0 ? '—' : diff;
+    } else elNext.textContent = 'нет данных';
+    const names = {menstrual: '🩸 Менструация', follicular: '🌱 Фолликулярная', ovulation: '🥚 Овуляция', luteal: '🌕 Лютеиновая'};
+    elPhase.textContent = names[info.phase] || '—';
+  }
+
+  renderCycleInsights(); 
+  renderPhaseCard(); 
+  renderCycleHistory();
+}
+
+function chMo(d){ calDate.setMonth(calDate.getMonth() + d); renderCycle(); }
+
+function markPeriod() {
+  const today = fmtDate(new Date());
+  const mc = document.getElementById('mcontent');
+  const mt = document.getElementById('mtitle');
+  mt.textContent = '🩸 Отметить месячные';
+  mc.innerHTML = `
+    <div class="ig"><label>С какого дня</label><input type="date" id="periodStart" value="${today}"></div>
+    <div class="ig"><label>По какой день</label><input type="date" id="periodEnd" value="${today}"></div>
+    <button class="btn btn-primary btn-full" onclick="savePeriodRange()">Отметить</button>
+  `;
+  openModal('period');
+}
+
+function savePeriodRange() {
+  const start = document.getElementById('periodStart').value;
+  const end = document.getElementById('periodEnd').value;
+  if (!start || !end) { showToast('Выберите даты'); return; }
+
+  const s = new Date(start), e = new Date(end);
+  if (s > e) { showToast('Начало не может быть позже конца'); return; }
+
+  const DAY = 86400000;
+  for (let d = new Date(s); d <= e; d = new Date(d.getTime() + DAY)) {
+    const dk = fmtDate(d);
+    if (!S.cycle.periods.includes(dk)) {
+      S.cycle.periods.push(dk);
+    }
+    S.cycle.days[dk] = {...(S.cycle.days[dk] || {}), phase: 'menstrual'};
+  }
+  S.cycle.periods.sort();
+  S.cycle.lastPeriod = S.cycle.periods[S.cycle.periods.length - 1];
+  invalidateCycleCache();
+  scheduleSave(); renderCycle();
+  closeModal();
+  showToast('✅ Месячные отмечены');
+}
+
+// ==================== PERIOD NOTIFICATIONS ====================
+function checkPeriodNotifications() {
+  if (!S.settings.notifications) return;
+  if (!S.cycle.periods || S.cycle.periods.length === 0) return;
+
+  // Request permission if not yet decided
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission().then(p => {
+      if (p === 'granted') checkPeriodNotifications();
+    });
+    return;
+  }
+
+  const preds = predictNextPeriods(1);
+  if (!preds || !preds.length) return;
+
+  const nextDate = new Date(preds[0]);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const diffDays = Math.round((today - nextDate) / 86400000);
+
+  if (diffDays >= 1) {
+    // Check if we already notified today
+    const lastNotif = localStorage.getItem('loveos_last_period_notif');
+    const todayStr = fmtDate(today);
+    if (lastNotif === todayStr) return; // Already notified today
+
+    const msg = `🩸 Месячные задержаны на ${diffDays} дн. Отметить начало?`;
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification('LoveOS', { body: msg });
+    } else {
+      showToast(msg, 5000);
+    }
+    localStorage.setItem('loveos_last_period_notif', todayStr);
+  } else {
+    // Period is on time or in future, clear last notification date
+    localStorage.removeItem('loveos_last_period_notif');
+  }
+}
+
+// ==================== CYCLE CHART (Lazy Chart.js) ====================
+let _chartJsLoaded = false, _chartJsLoading = false;
+function showCycleChart() {
+  if (_chartJsLoading) { showToast('⏳ Загрузка графика...'); return; }
+  if (!_chartJsLoaded) {
+    _chartJsLoading = true;
+    showToast('⏳ Загрузка Chart.js...');
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
+    s.onload = () => {
+      _chartJsLoaded = true;
+      _chartJsLoading = false;
+      renderCycleChartModal();
+    };
+    s.onerror = () => {
+      _chartJsLoading = false;
+      showToast('❌ Ошибка загрузки Chart.js');
+    };
+    document.head.appendChild(s);
+  } else {
+    renderCycleChartModal();
+  }
+}
+
+function renderCycleChartModal() {
+  const mt = document.getElementById('mtitle');
+  const mc = document.getElementById('mcontent');
+  mt.textContent = '📊 График циклов';
+  mc.innerHTML = `
+    <div style="padding:10px 0;">
+      <canvas id="cycleChart" style="max-height:300px;"></canvas>
+    </div>
+    <button class="btn btn-secondary btn-full" onclick="closeModal()">Закрыть</button>
+  `;
+  openModal('chart');
+
+  setTimeout(() => {
+    const ctx = document.getElementById('cycleChart').getContext('2d');
+    const sorted = [...S.cycle.periods].sort();
+    const labels = [];
+    const data = [];
+    for (let i = 1; i < sorted.length; i++) {
+      const d1 = new Date(sorted[i-1]), d2 = new Date(sorted[i]);
+      const diff = Math.floor((d2 - d1) / 86400000);
+      if (diff >= 14 && diff <= 45) {
+        labels.push(new Date(sorted[i]).toLocaleDateString('ru', {day:'numeric', month:'short'}));
+        data.push(diff);
+      }
+    }
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Длина цикла (дней)',
+          data: data,
+          borderColor: '#e91e63',
+          backgroundColor: 'rgba(233,30,99,0.1)',
+          fill: true,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: false, min: 20 }
+        }
+      }
+    });
+  }, 100);
+}
+
+function openDayModal(dateKey) {
+  const dayData = S.cycle.days[dateKey] || {};
+  const phases = [
+    {id: 'menstrual', icon: '🩸', label: 'Менструация', desc: 'Первый день цикла'},
+    {id: 'follicular', icon: '🌱', label: 'Фолликулярная', desc: 'Энергия растёт'},
+    {id: 'ovulation', icon: '🥚', label: 'Овуляция', desc: 'Пик фертильности'},
+    {id: 'luteal', icon: '🌕', label: 'Лютеиновая', desc: 'Подготовка к месячным'}
+  ];
+  const symptoms = ['😠 Раздражение', '🤕 Головная боль', '😴 Усталость', '🍫 Тяга к сладкому', '💪 Энергия', '😊 Хорошее настроение', '🫁 Боль в груди', '🫃 Вздутие'];
+
+  const mc = document.getElementById('mcontent');
+  const mt = document.getElementById('mtitle');
+
+  mt.textContent = `📅 ${new Date(dateKey).toLocaleDateString('ru', {day:'numeric', month:'long'})}`;
+
+  mc.innerHTML = `
+    <div class="day-modal">
+      <div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:8px;">Фаза цикла</div>
+      <div class="phase-select">
+        ${phases.map(p => `
+          <div class="phase-option ${dayData.phase === p.id ? 'on' : ''}" onclick="selectPhase(this, '${p.id}')">
+            <span class="phase-icon">${p.icon}</span>
+            <div>
+              <div class="phase-label">${p.label}</div>
+              <div class="phase-desc">${p.desc}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div style="font-size:.8rem;color:var(--text-secondary);margin:12px 0 8px;">Симптомы</div>
+      <div class="symp-grid">
+        ${symptoms.map(s => `
+          <div class="symp ${(dayData.symptoms || []).includes(s) ? 'on' : ''}" onclick="togDaySymp(this, '${escAttr(s)}')">${esc(s)}</div>
+        `).join('')}
+      </div>
+
+      <div style="font-size:.8rem;color:var(--text-secondary);margin:12px 0 8px;">Интимность</div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-sm ${dayData.intimacy ? 'btn-primary' : 'btn-secondary'}" onclick="setIntimacy(true)" style="flex:1;">💕 Да</button>
+        <button class="btn btn-sm ${dayData.intimacy === false ? 'btn-primary' : 'btn-secondary'}" onclick="setIntimacy(false)" style="flex:1;">🚫 Нет</button>
+      </div>
+
+      <div class="ig" style="margin-top:12px;">
+        <label>Заметка</label>
+        <textarea id="dayNote" rows="2" placeholder="Ощущения, наблюдения...">${esc(dayData.note || '')}</textarea>
+      </div>
+
+      <button class="btn btn-primary btn-full" style="margin-top:12px;" onclick="saveDay('${dateKey}')">💾 Сохранить день</button>
+      ${dayData.phase ? `<button class="btn btn-danger btn-full" style="margin-top:8px;" onclick="clearDay('${dateKey}')">🗑 Удалить отметку</button>` : ''}
+    </div>
+  `;
+
+  openModal('day');
+  window._currentDay = dateKey;
+  window._currentDayData = {...dayData};
+}
+
+function selectPhase(el, phaseId) {
+  document.querySelectorAll('.phase-option').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  window._currentDayData.phase = phaseId;
+}
+
+function togDaySymp(el, symp) {
+  if (!window._currentDayData.symptoms) window._currentDayData.symptoms = [];
+  const idx = window._currentDayData.symptoms.indexOf(symp);
+  if (idx > -1) {
+    window._currentDayData.symptoms.splice(idx, 1);
+    el.classList.remove('on');
+  } else {
+    window._currentDayData.symptoms.push(symp);
+    el.classList.add('on');
+  }
+}
+
+function setIntimacy(val) {
+  window._currentDayData.intimacy = val;
+  const btns = document.querySelectorAll('.day-modal button[onclick^="setIntimacy"]');
+  if (btns.length >= 2) {
+    btns[0].className = 'btn btn-sm ' + (val === true ? 'btn-primary' : 'btn-secondary');
+    btns[1].className = 'btn btn-sm ' + (val === false ? 'btn-primary' : 'btn-secondary');
+  }
+}
+
+function saveDay(dateKey) {
+  const oldDay = S.cycle.days[dateKey];
+  const note = document.getElementById('dayNote').value;
+  window._currentDayData.note = note;
+
+  if (oldDay && oldDay.phase === 'menstrual' && window._currentDayData.phase !== 'menstrual') {
+    S.cycle.periods = S.cycle.periods.filter(d => d !== dateKey);
+    S.cycle.periods.sort();
+    S.cycle.lastPeriod = S.cycle.periods.length ? S.cycle.periods[S.cycle.periods.length - 1] : '';
+  }
+
+  if (window._currentDayData.phase === 'menstrual' && !S.cycle.periods.includes(dateKey)) {
+    S.cycle.periods.push(dateKey);
+    S.cycle.periods.sort();
+    S.cycle.lastPeriod = dateKey;
+  }
+
+  S.cycle.days[dateKey] = {...window._currentDayData};
+  invalidateCycleCache();
+  scheduleSave();
+  closeModal();
+  renderCycle();
+  showToast('✅ День сохранён');
+}
+
+function clearDay(dateKey) {
+  if (!confirm('Удалить отметку за этот день?')) return;
+  if (S.cycle.days[dateKey] && S.cycle.days[dateKey].phase === 'menstrual') {
+    S.cycle.periods = S.cycle.periods.filter(d => d !== dateKey);
+    S.cycle.lastPeriod = S.cycle.periods.length ? S.cycle.periods[S.cycle.periods.length - 1] : '';
+  }
+  delete S.cycle.days[dateKey];
+  invalidateCycleCache();
+  scheduleSave();
+  closeModal();
+  renderCycle();
+  showToast('🗑 Отметка удалена');
+  if(db && S.settings.syncEnabled) {
+    db.ref('loveos_shared/cycle/days/' + dateKey).remove().catch(()=>{});
+    db.ref('loveos_shared/cycle/periods/' + dateKey).remove().catch(()=>{});
+  }
+}
+
+// ==================== GAMES ====================
+function initTTT(){
+  const g = document.getElementById('tttGrid');
+  if (!g) return;
+  g.innerHTML = Array(9).fill(0).map((_,i) => 
+    `<div class="ttt-cell" onclick="tttMove(${i})" id="ttt${i}"></div>`
+  ).join('');
+  renderTTT();
+}
+
+function renderTTT(){
+  const sym = {'X':'❌','O':'⭕'};
+  S.ttt.board.forEach((v,i) => {
+    const c = document.getElementById('ttt'+i); 
+    if(!c) return;
+    c.textContent = v ? sym[v] : ''; 
+    c.style.color = v === 'X' ? 'var(--accent)' : 'var(--text-secondary)';
+    c.classList.remove('win');
+  });
+
+  const win = checkTTTWin(S.ttt.board);
+  const st = document.getElementById('tttStatus');
+
+  const scoreText = ` (❌ ${S.ttt.scores.X || 0} : ${S.ttt.scores.O || 0} ⭕)`;
+  if(win){
+    win.slice(0,3).forEach(i => {
+      const c = document.getElementById('ttt'+i);
+      if (c) c.classList.add('win');
+    });
+    st.textContent = `Победа ${sym[win[3]]}! 🎉${scoreText}`;
+    S.ttt.scores[win[3]] = (S.ttt.scores[win[3]] || 0) + 1;
+    scheduleSave();
+  } else if(!S.ttt.board.includes(null)){
+    st.textContent = 'Ничья! 🤝' + scoreText;
+  } else {
+    st.textContent = 'Ход: ' + (S.ttt.turn === 'X' ? '❌' : '⭕') + scoreText;
+  }
+}
+
+function tttMove(i){
+  if(!S.ttt.board || S.ttt.board[i] || checkTTTWin(S.ttt.board)) return;
+  if(S.ttt.lastSender === S.myRole) return;
+
+  if(!db || !S.settings.syncEnabled) {
+    S.ttt.board[i] = S.ttt.turn;
+    S.ttt.turn = S.ttt.turn === 'X' ? 'O' : 'X';
+    S.ttt.lastSender = S.myRole;
+    scheduleSave(); 
+    renderTTT();
+    return;
+  }
+
+  const tttRef = db.ref('loveos_shared/ttt');
+  tttRef.transaction(current => {
+    if (!current) current = { board: Array(9).fill(null), turn: 'X', scores: S.ttt?.scores || {X:0, O:0}, lastSender: '' };
+    if (!current.board) current.board = Array(9).fill(null);
+    if (current.board[i] || checkTTTWin(current.board)) return undefined;
+    if (current.lastSender === S.myRole) return undefined;
+    current.board[i] = current.turn;
+    current.turn = current.turn === 'X' ? 'O' : 'X';
+    current.lastSender = S.myRole;
+    return current;
+  }, (error, committed, snapshot) => {
+    if (error) {
+      console.error('TTT transaction failed', error);
+      showToast('❌ Ошибка хода');
+    } else if (committed && snapshot) {
+      S.ttt = snapshot.val();
+      saveLocal();
+      renderTTT();
+    }
+  });
+}
+
+function checkTTTWin(b){
+  if (!b || !Array.isArray(b)) return null;
+  const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  for(const [a,c,d] of lines){ 
+    if(b[a] && b[a] === b[c] && b[a] === b[d]) return [a,c,d,b[a]]; 
+  }
+  return null;
+}
+
+function resetTTT(){ 
+  if (window._tttResetTimer) { clearTimeout(window._tttResetTimer); window._tttResetTimer = null; }
+  S.ttt = { board: Array(9).fill(null), turn: 'X', scores: S.ttt?.scores || {X:0, O:0}, lastSender: '' }; 
+  scheduleSave(); 
+  initTTT(); 
+  // Push reset to Firebase so partner can play too
+  if(db && S.settings.syncEnabled) {
+    db.ref('loveos_shared/ttt').set(S.ttt).catch(err => console.error('TTT reset sync failed', err));
+  }
+}
+
+const HM_WORDS = [
+  {w:'ЛЮБОВЬ',h:'Чувство'},{w:'ПОЦЕЛУЙ',h:'Нежность'},{w:'ОБЪЯТИЕ',h:'Тепло'},
+  {w:'СЧАСТЬЕ',h:'Состояние'},{w:'МЕЧТА',h:'Желание'},{w:'СВИДАНИЕ',h:'Встреча'},
+  {w:'РОМАНТИКА',h:'Настроение'},{w:'СЕРДЦЕ',h:'Символ'}
+];
+const HM_STATES = ['😊','🙂','😐','😕','😟','😢','💀'];
+
+function initHangman(){ 
+  if (!S.hangman || !S.hangman.word) newHangman();
+  else renderHangman();
+}
+
+function newHangman(){
+  const item = HM_WORDS[Math.floor(Math.random() * HM_WORDS.length)];
+  S.hangman = {word: item.w, guessed: [], wrong: 0, hint: item.h};
+  scheduleSave();
+  renderHangman();
+}
+
+function renderHangman(){
+  const fig = document.getElementById('hangFig');
+  const word = document.getElementById('hangWord');
+  const hint = document.getElementById('hangHint');
+  const keys = document.getElementById('hangKeys');
+  const result = document.getElementById('hangResult');
+
+  if (!fig || !word || !keys) return;
+
+  fig.textContent = HM_STATES[Math.min(S.hangman.wrong, HM_STATES.length - 1)];
+  hint.textContent = 'Подсказка: ' + (S.hangman.hint || '');
+
+  word.innerHTML = S.hangman.word.split('').map(c => 
+    `<div class="hangman-letter">${S.hangman.guessed.includes(c) ? c : ''}</div>`
+  ).join('');
+
+  const alpha = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  keys.innerHTML = alpha.split('').map(c => {
+    const used = S.hangman.guessed.includes(c);
+    const correct = used && S.hangman.word.includes(c);
+    return `<button class="hangman-key ${used ? (correct ? 'correct' : 'wrong') : ''}" onclick="guessHM('${c}')" ${used ? 'disabled' : ''}>${c}</button>`;
+  }).join('');
+
+  const won = S.hangman.word.split('').every(l => S.hangman.guessed.includes(l));
+  const lost = S.hangman.wrong >= 6;
+
+  if(won) result.textContent = '🎉 Победа! Слово: ' + S.hangman.word;
+  else if(lost) result.textContent = '💀 Проиграл! Слово: ' + S.hangman.word;
+  else result.textContent = '';
+}
+
+function guessHM(c){
+  if(S.hangman.wrong >= 6) return;
+  if(S.hangman.word.split('').every(l => S.hangman.guessed.includes(l))) return;
+
+  if(!S.hangman.guessed.includes(c)) {
+    S.hangman.guessed.push(c);
+    if(!S.hangman.word.includes(c)) S.hangman.wrong++;
+  }
+  scheduleSave();
+  renderHangman();
+}
+
+function spinRoulette(){
+  const all = [...S.customIdeas], el = document.getElementById('rouletteText');
+  if(window._rouletteInterval) clearInterval(window._rouletteInterval);
+  let c = 0;
+  window._rouletteInterval = setInterval(() => {
+    el.textContent = all[Math.floor(Math.random() * all.length)];
+    if(c++ > 15){ clearInterval(window._rouletteInterval); window._rouletteInterval = null; }
+  }, 70);
+}
+
+// ==================== MODALS ====================
+function openModal(type){
+  const ov = document.getElementById('overlay'), mt = document.getElementById('mtitle'), mc = document.getElementById('mcontent');
+
+  if (modalDepth === 0) {
+    history.pushState({modal: true, page: currentPage}, '', window.location.hash);
+  }
+  modalDepth++;
+  ov.classList.add('on');
+
+  if(type === 'wish'){
+    mt.textContent = '✨ Новое желание';
+    mc.innerHTML = `<div class="ig"><label>Желание</label><input id="wi" placeholder="О чём мечтаешь?"></div>
+      <div class="ig"><label>Категория</label><select id="wc"><option value="travel">✈️ Путешествие</option><option value="gift">🎁 Подарок</option><option value="experience">🌟 Опыт</option><option value="other">📦 Другое</option></select></div>
+      <div class="ig"><label>Дата</label><input type="date" id="wd"></div>
+      <button class="btn btn-primary btn-full" onclick="addWish()">Добавить</button>`;
+    document.getElementById('wd').valueAsDate = new Date();
+  } else if(type === 'task'){
+    mt.textContent = '✅ Новая задача';
+    mc.innerHTML = `<div class="ig"><label>Задача</label><input id="ti" placeholder="Что сделать?"></div>
+      <div class="ig"><label>Ответственный</label><select id="to"><option value="me">Я</option><option value="partner">Партнёр</option><option value="both">Вместе</option></select></div>
+      <div class="ig"><label>Дедлайн</label><input type="date" id="tdl"></div>
+      <button class="btn btn-primary btn-full" onclick="addTask()">Добавить</button>`;
+  } else if(type === 'saving'){
+    mt.textContent = '💰 Новая копилка';
+    mc.innerHTML = `<div class="ig"><label>Название</label><input id="sn" placeholder="На что копим?"></div>
+      <div class="ig"><label>Цель</label><input type="number" id="sg" placeholder="10000" min="1"></div>
+      <div class="ig"><label>Валюта</label><select id="sc"><option>₽</option><option>$</option><option>€</option></select></div>
+      <button class="btn btn-primary btn-full" onclick="addSaving()">Создать</button>`;
+  } else if(type === 'note'){
+    mt.textContent = '📝 Заметка';
+    mc.innerHTML = `<div class="ig"><label>Текст</label><textarea id="nt" rows="3" placeholder="Напиши что-нибудь..."></textarea></div>
+      <button class="btn btn-primary btn-full" onclick="addNote()">Сохранить</button>`;
+  } else if(type === 'capsule'){
+    mt.textContent = '✉️ Письмо в будущее';
+    mc.innerHTML = `<div class="ig"><label>Текст письма</label><textarea id="ct" rows="3" placeholder="Напиши себе из прошлого..."></textarea></div>
+      <div class="ig"><label>Открыть через</label><select id="cdl"><option value="7">7 дней</option><option value="30">30 дней</option><option value="365">1 год</option></select></div>
+      <button class="btn btn-primary btn-full" onclick="addCapsule()">Запечатать</button>`;
+  } else if (type === 'period' || type === 'loveQuiz' || type === 'knowQuiz' || type === 'day' || type === 'chart' || type === 'profile') {
+    // These types are handled by specialized functions that populate mcontent directly
+    // Do nothing - content is already set by the calling function
+  }
+}
+
+function closeModal(e){ 
+  if(e && e.target.id !== 'overlay' && !e.target.classList.contains('modal-close')) return;
+  const overlay = document.getElementById('overlay');
+  if (!overlay.classList.contains('on')) return;
+  modalDepth--;
+  if (modalDepth <= 0) {
+    modalDepth = 0;
+    overlay.classList.remove('on');
+    if (history.state && history.state.modal) history.back();
+  }
+  // Clean up global modal state to prevent memory leaks
+  window._currentDay = null;
+  window._currentDayData = null;
+  window._rouletteInterval = null;
+}
+
+function closeAllModals() {
+  modalDepth = 0;
+  document.getElementById('overlay').classList.remove('on');
+  window._currentDay = null;
+  window._currentDayData = null;
+  window._rouletteInterval = null;
+}
+
+function editWish(id) {
+  const w = S.wishes.find(x => x.id === id);
+  if(!w) return;
+  const ov = document.getElementById('overlay'), mt = document.getElementById('mtitle'), mc = document.getElementById('mcontent');
+  if (modalDepth === 0) {
+    history.pushState({modal: true, page: currentPage}, '', window.location.hash);
+  }
+  modalDepth++;
+  ov.classList.add('on');
+  mt.textContent = '✏️ Редактировать желание';
+  mc.innerHTML = `<div class="ig"><label>Желание</label><input id="wi" value="${escAttr(w.text)}"></div>
+    <div class="ig"><label>Категория</label><select id="wc"><option value="travel" ${w.category === 'travel' ? 'selected' : ''}>✈️ Путешествие</option><option value="gift" ${w.category === 'gift' ? 'selected' : ''}>🎁 Подарок</option><option value="experience" ${w.category === 'experience' ? 'selected' : ''}>🌟 Опыт</option><option value="other" ${w.category === 'other' ? 'selected' : ''}>📦 Другое</option></select></div>
+    <div class="ig"><label>Дата</label><input type="date" id="wd" value="${escAttr(w.date || '')}"></div>
+    <button class="btn btn-primary btn-full" onclick="saveEditWish('${escAttr(id)}')">Сохранить</button>`;
+}
+
+function saveEditWish(id) {
+  const w = S.wishes.find(x => x.id === id);
+  if(!w) return;
+  w.text = document.getElementById('wi').value;
+  w.category = document.getElementById('wc').value;
+  w.date = document.getElementById('wd').value;
+  scheduleSave(); closeModal(); renderWishes();
+  if(db && S.settings.syncEnabled) db.ref('loveos_shared/wishes/' + id).set(w).catch(()=>{});
+}
+
+function addWish(){
+  const t = document.getElementById('wi').value; if(!t) return;
+  S.wishes.push({id: generateId(), text: t, category: document.getElementById('wc').value, date: document.getElementById('wd').value, done: false, ts: Date.now()});
+  wishesVisibleCount = VISIBLE_BATCH;
+  scheduleSave(); closeModal(); renderWishes();
+}
+function addTask(){
+  const t = document.getElementById('ti').value; if(!t) return;
+  S.tasks.push({id: generateId(), text: t, owner: document.getElementById('to').value, deadline: document.getElementById('tdl').value, done: false, ts: Date.now()});
+  tasksVisibleCount = VISIBLE_BATCH;
+  scheduleSave(); closeModal(); renderTasks();
+}
+function addSaving(){
+  const n = document.getElementById('sn').value, g = parseFloat(document.getElementById('sg').value);
+  if(!n || !g || g <= 0) { showToast('Введите корректную цель'); return; }
+  S.savings.push({id: generateId(), name: n, goal: g, current: 0, currency: document.getElementById('sc').value, ts: Date.now()});
+  savingsVisibleCount = VISIBLE_BATCH;
+  scheduleSave(); closeModal(); renderSavings();
+}
+function addNote(){
+  const t = document.getElementById('nt').value; if(!t) return;
+  S.notes.push({id: generateId(), text: t, date: new Date().toISOString(), author: getMe().name, ts: Date.now()});
+  notesVisibleCount = VISIBLE_BATCH;
+  scheduleSave(); closeModal(); renderNotes();
+}
+function addCapsule(){
+  const t = document.getElementById('ct').value; if(!t) return;
+  const days = parseInt(document.getElementById('cdl').value);
+  // Use UTC timestamp for consistency across devices
+  const openAfter = Date.now() + days * 86400000;
+  S.capsules.push({id: generateId(), text: t, created: new Date().toISOString(), openAfter: openAfter, opened: false, ts: Date.now()});
+  notesVisibleCount = VISIBLE_BATCH;
+  scheduleSave(); closeModal(); renderNotes(); showToast('✉️ Письмо запечатано! Откроется примерно через ' + days + ' дн.');
+}
+
+function openProfile(target){
+  const isMe = target === 'me';
+  const p = isMe ? getMe() : getPartner();
+
+  const ov = document.getElementById('overlay'), mt = document.getElementById('mtitle'), mc = document.getElementById('mcontent');
+
+  mt.textContent = isMe ? '👤 Мой профиль' : '💕 Профиль партнёра';
+
+  if (!isMe) {
+    mc.innerHTML = `
+      <div style="text-align:center;padding:20px;">
+        <div style="font-size:3rem;margin-bottom:8px;">${esc(p.avatar)}</div>
+        <div style="font-size:1.2rem;font-weight:700;">${esc(p.name)}</div>
+        <div style="color:var(--text-secondary);margin:8px 0;">${esc(p.color)}</div>
+        <div style="text-align:left;margin-top:16px;">
+          <div style="margin:8px 0;"><strong>🍽️ Любимая еда:</strong> ${esc(p.food)}</div>
+          <div style="margin:8px 0;"><strong>🎬 Фильм:</strong> ${esc(p.movie)}</div>
+          <div style="margin:8px 0;"><strong>🎵 Песня:</strong> ${esc(p.song)}</div>
+          <div style="margin:8px 0;"><strong>🎯 Хобби:</strong> ${esc(p.hobby)}</div>
+          <div style="margin:8px 0;"><strong>✨ Мечта:</strong> ${esc(p.dream)}</div>
+          ${p.loveLang ? `<div style="margin:8px 0;"><strong>💝 Язык любви:</strong> ${esc(p.loveLang)}</div>` : ''}
+        </div>
+        <button class="btn btn-secondary btn-full" style="margin-top:16px;" onclick="closeModal()">Закрыть</button>
+      </div>`;
+  } else {
+    mc.innerHTML = `
+      <div class="ig"><label>Имя</label><input id="pfn" value="${escAttr(p.name)}"></div>
+      <div class="ig"><label>Аватар (эмодзи)</label><input id="pfa" value="${escAttr(p.avatar)}"></div>
+      <div class="ig"><label>Любимый цвет</label><input id="pfc" value="${escAttr(p.color)}"></div>
+      <div class="ig"><label>Любимая еда</label><input id="pff" value="${escAttr(p.food)}"></div>
+      <div class="ig"><label>Фильм</label><input id="pfm" value="${escAttr(p.movie)}"></div>
+      <div class="ig"><label>Песня</label><input id="pfs" value="${escAttr(p.song)}"></div>
+      <div class="ig"><label>Хобби</label><input id="pfh" value="${escAttr(p.hobby)}"></div>
+      <div class="ig"><label>Мечта</label><input id="pfd" value="${escAttr(p.dream)}"></div>
+      <button class="btn btn-primary btn-full" onclick="saveProfile()">Сохранить</button>`;
+  }
+
+  openModal('profile');
+}
+
+function saveProfile(){
+  const p = getMe();
+  p.name = document.getElementById('pfn').value; 
+  p.avatar = document.getElementById('pfa').value; 
+  p.color = document.getElementById('pfc').value;
+  p.food = document.getElementById('pff').value; 
+  p.movie = document.getElementById('pfm').value; 
+  p.song = document.getElementById('pfs').value;
+  p.hobby = document.getElementById('pfh').value; 
+  p.dream = document.getElementById('pfd').value;
+  scheduleSave(); 
+  closeModal(); 
+  renderProfiles();
+}
+
+// ==================== QUIZZES ====================
+const LL_QS = [
+  {q:'Как ты предпочитаешь получать любовь?',opts:['Слова поддержки и комплименты','Время вдвоём без отвлечений','Подарки и сюрпризы','Помощь в делах','Объятия и прикосновения']},
+  {q:'Что для тебя важнее всего в отношениях?',opts:['Слышать "я тебя люблю"','Проводить время вместе','Получать знаки внимания','Чтобы помогали без просьбы','Физическая близость']},
+  {q:'Как ты обычно выражаешь любовь?',opts:['Говорю тёплые слова','Планирую свидания','Дарю подарки','Делаю полезные дела','Обнимаю и целую']},
+  {q:'Что тебя расстраивает больше всего?',opts:['Грубые слова','Невнимание','Забытые праздники','Безразличие к проблемам','Отсутствие близости']},
+  {q:'Какой подарок тебе приятнее?',opts:['Записка с признанием','Совместный ужин','Что-то сделанное своими руками','Помощь с проектом','Массаж']},
+  {q:'Что ты ценишь после трудного дня?',opts:['Слова поддержки','Тихий вечер вдвоём','Маленький сюрприз','Что быт сделан за меня','Объятия']},
+  {q:'Как ты реагируешь на конфликт?',opts:['Хочу поговорить','Нужно время вдвоём','Мирюсь через подарок','Решаю проблему практически','Нужно обняться']},
+  {q:'Что делает тебя счастливым?',opts:['Услышать комплимент','Совместное путешествие','Получить неожиданный подарок','Когда всё сделано без меня','Долгие объятия']},
+  {q:'Какой жест для тебя самый романтичный?',opts:['Письмо с чувствами','Пикник при свечах','Сюрприз-ужин','Помощь в трудную минуту','Танец вдвоём']},
+  {q:'Что ты хочешь от партнёра чаще?',opts:['Слышать слова любви','Больше времени вдвоём','Больше знаков внимания','Больше помощи','Больше близости']}
+];
+const LL_NAMES = ['Слова поощрения','Качественное время','Подарки','Акты помощи','Прикосновения'];
+let llIdx = 0, llAns = [];
+
+function openLoveLang(){ 
+  llIdx = 0; 
+  llAns = []; 
+  renderLL(); 
+}
+
+function renderLL(){
+  const mc = document.getElementById('mcontent'), mt = document.getElementById('mtitle');
+  if (!document.getElementById('overlay').classList.contains('on')) openModal('loveQuiz');
+  mt.textContent = '💝 Язык любви';
+
+  if(llIdx >= LL_QS.length){
+    const scores = [0,0,0,0,0]; 
+    llAns.forEach(a => scores[a]++);
+    const bestIdx = scores.indexOf(Math.max(...scores));
+    const best = LL_NAMES[bestIdx];
+    getMe().loveLang = best; 
+    scheduleSave(); 
+
+    mc.innerHTML = `
+      <div style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;">💝</div>
+        <div style="font-size:1.2rem;font-weight:700;margin:8px;">Твой язык любви:</div>
+        <div style="font-size:1.4rem;color:var(--accent);font-weight:700;">${esc(best)}</div>
+        <div style="font-size:.85rem;color:var(--text-secondary);margin:8px 0;">${getLoveLangDesc(best)}</div>
+        <button class="btn btn-primary btn-full" style="margin-top:16px;" onclick="closeModal()">Готово</button>
+      </div>`;
+    return;
+  }
+
+  const q = LL_QS[llIdx];
+  mc.innerHTML = `
+    <div style="font-size:.8rem;color:var(--text-secondary);margin-bottom:8px;">${llIdx+1}/${LL_QS.length}</div>
+    <div style="font-weight:700;margin-bottom:12px;">${esc(q.q)}</div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      ${q.opts.map((o,i) => `<button class="btn btn-secondary" style="justify-content:flex-start;text-align:left;" onclick="llAnswer(${i})">${esc(o)}</button>`).join('')}
+    </div>`;
+}
+
+function llAnswer(i){ 
+  llAns.push(i); 
+  llIdx++; 
+  renderLL(); 
+}
+
+function getLoveLangDesc(lang) {
+  const descs = {
+    'Слова поощрения': 'Тебе важно слышать тёплые слова, комплименты и признания.',
+    'Качественное время': 'Тебе важно внимание и время, проведённое вдвоём.',
+    'Подарки': 'Тебе важны знаки внимания и материальные проявления любви.',
+    'Акты помощи': 'Тебе важно, когда партнёр помогает делами.',
+    'Прикосновения': 'Тебе важна физическая близость и тактильный контакт.'
+  };
+  return descs[lang] || '';
+}
+
+const KQ_QS = [
+  {q:'Любимый цвет партнёра?',opts:['Красный','Синий','Зелёный','Жёлтый','Фиолетовый','Чёрный']},
+  {q:'Любимое блюдо партнёра?',opts:['Пицца','Суши','Паста','Борщ','Стейк','Десерты']},
+  {q:'Главный страх партнёра?',opts:['Высота','Темнота','Одиночество','Змеи','Неудача','Потеря']},
+  {q:'Какой фильм любит партнёр?',opts:['Начало','Титаник','Матрица','Гарри Поттер','Властелин колец','Другое']},
+  {q:'Какой музыкальный жанр предпочитает?',opts:['Поп','Рок','Джаз','Классика','Рэп','Электроника']},
+  {q:'Какой отдых предпочитает?',opts:['Море','Горы','Город','Деревня','Экстрим','Дома']}
+];
+let kqIdx = 0, kqAns = [], kqCorrect = [];
+
+function openKnowQuiz(){
+  const me = getMe();
+  if(!me.known || me.known.length < KQ_QS.length){ 
+    kqIdx = 0; 
+    kqCorrect = []; 
+    renderKQSet(); 
+  } else { 
+    kqIdx = 0; 
+    kqAns = []; 
+    kqCorrect = me.known; 
+    renderKQGuess(); 
+  }
+}
+
+function renderKQSet(){
+  const mc = document.getElementById('mcontent'), mt = document.getElementById('mtitle');
+  if (!document.getElementById('overlay').classList.contains('on')) openModal('knowQuiz');
+  mt.textContent = '🧠 Ответь о себе';
+
+  if(kqIdx >= KQ_QS.length){
+    getMe().known = kqCorrect; 
+    scheduleSave();
+    mc.innerHTML = `
+      <div style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;">✅</div>
+        <div style="font-weight:700;">Ответы сохранены!</div>
+        <div style="font-size:.85rem;color:var(--text-secondary);margin:8px 0;">Теперь партнёр может угадать</div>
+        <button class="btn btn-primary btn-full" style="margin-top:12px;" onclick="closeModal()">Готово</button>
+      </div>`;
+    return;
+  }
+
+  const q = KQ_QS[kqIdx];
+  mc.innerHTML = `
+    <div style="font-size:.8rem;color:var(--text-secondary);">${kqIdx+1}/${KQ_QS.length}</div>
+    <div style="font-weight:700;margin:8px 0;">${esc(q.q)}</div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      ${q.opts.map(o => `<button class="btn btn-secondary" style="justify-content:flex-start;text-align:left;" onclick="kqSet('${escAttr(o)}')">${esc(o)}</button>`).join('')}
+    </div>`;
+}
+
+function kqSet(v){ 
+  kqCorrect.push(v); 
+  kqIdx++; 
+  renderKQSet(); 
+}
+
+function renderKQGuess(){
+  const partner = getPartner();
+  const mc = document.getElementById('mcontent');
+
+  if(!partner.known || partner.known.length < 1){
+    mc.innerHTML = `
+      <div style="text-align:center;padding:20px;">
+        <div style="font-size:2rem;">💭</div>
+        <div style="font-weight:700;">Партнёр ещё не ответил</div>
+        <div style="font-size:.85rem;color:var(--text-secondary);margin:8px 0;">Попроси пройти тест "Насколько знаешь?"</div>
+        <button class="btn btn-primary btn-full" style="margin-top:12px;" onclick="closeModal()">Понятно</button>
+      </div>`;
+    return;
+  }
+
+  if(kqIdx >= KQ_QS.length){
+    let score = 0; 
+    kqAns.forEach((a,i) => { if(a === partner.known[i]) score++; });
+    const pct = Math.round(score / KQ_QS.length * 100);
+
+    mc.innerHTML = `
+      <div style="text-align:center;padding:20px;">
+        <div style="font-size:2.5rem;">${pct >= 80 ? '🎉' : pct >= 50 ? '💕' : '💔'}</div>
+        <div style="font-size:1.5rem;font-weight:700;color:var(--accent);">${pct}%</div>
+        <div style="margin:8px 0;">${score} из ${KQ_QS.length} правильно</div>
+        <div style="font-size:.85rem;color:var(--text-secondary);">${getQuizComment(pct)}</div>
+        <button class="btn btn-primary btn-full" style="margin-top:12px;" onclick="closeModal()">Закрыть</button>
+      </div>`;
+    return;
+  }
+
+  const q = KQ_QS[kqIdx];
+  mc.innerHTML = `
+    <div style="font-size:.8rem;color:var(--text-secondary);">${kqIdx+1}/${KQ_QS.length} — О партнёре</div>
+    <div style="font-weight:700;margin:8px 0;">${esc(q.q)}</div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      ${q.opts.map(o => `<button class="btn btn-secondary" style="justify-content:flex-start;text-align:left;" onclick="kqGuess('${escAttr(o)}')">${esc(o)}</button>`).join('')}
+    </div>`;
+}
+
+function kqGuess(v){ 
+  kqAns.push(v); 
+  kqIdx++; 
+  renderKQGuess(); 
+}
+
+function getQuizComment(pct) {
+  if (pct >= 90) return 'Вы идеально знаете друг друга! 💕';
+  if (pct >= 70) return 'Отличное знание партнёра! 🌟';
+  if (pct >= 50) return 'Неплохо, но есть куда стремиться 💪';
+  if (pct >= 30) return 'Пора больше общаться друг с другом 🤗';
+  return 'Срочно нужны разговоры по душам! 💬';
+}
+
+// ==================== MOOD ====================
+function setMood(emoji){
+  document.querySelectorAll('.mood-emoji').forEach(el => el.classList.remove('active'));
+  document.getElementById('mood-' + emoji).classList.add('active');
+  saveMood(emoji);
+}
+
+function saveMood(em){
+  const me = getMe();
+  if(!me.moods) me.moods = [];
+  const today = new Date().toDateString(), comment = document.getElementById('moodComment').value || '';
+  let currentEmoji = em;
+  if (!currentEmoji) {
+    const activeMood = document.querySelector('.mood-emoji.active');
+    currentEmoji = activeMood ? activeMood.textContent : '😐';
+    const m = me.moods.find(x => new Date(x.date).toDateString() === today);
+    if (!currentEmoji || currentEmoji === '😐') currentEmoji = m ? m.emoji : '😐';
+  }
+  const entry = {emoji: currentEmoji, comment: comment, date: new Date().toISOString()};
+  const idx = me.moods.findIndex(m => new Date(m.date).toDateString() === today);
+  if(idx >= 0) me.moods[idx] = entry; 
+  else me.moods.push(entry);
+  if(me.moods.length > 30) me.moods = me.moods.slice(-30);
+  scheduleSave(); 
+  renderMood();
+}
+
+function renderMood(){
+  const me = getMe(), today = new Date().toDateString();
+  const m = me.moods?.find(x => new Date(x.date).toDateString() === today);
+  if(m){ 
+    document.getElementById('mood-' + m.emoji).classList.add('active'); 
+    document.getElementById('moodComment').value = m.comment || ''; 
+  }
+}
+
+// ==================== MISC ====================
+function setStuffTab(tab, el){
+  ['wishes','tasks','savings'].forEach(t => document.getElementById('stuff-' + t).style.display = 'none');
+  document.getElementById('stuff-' + tab).style.display = 'block';
+  document.querySelectorAll('#page-stuff .pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  // Reset virtual counters when switching tabs for consistent UX
+  if(tab === 'wishes') { wishesVisibleCount = VISIBLE_BATCH; renderWishes(); }
+  if(tab === 'tasks') { tasksVisibleCount = VISIBLE_BATCH; renderTasks(); }
+  if(tab === 'savings') { savingsVisibleCount = VISIBLE_BATCH; renderSavings(); }
+}
+
+function exportData(){
+  showToast('⏳ Экспорт данных...');
+  const blob = new Blob([JSON.stringify(S, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; 
+  a.download = 'loveos_backup_' + new Date().toISOString().split('T')[0] + '.json'; 
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); showToast('✅ Экспорт завершён'); }, 1000);
+}
+
+function importData(){
+  const inp = document.createElement('input'); 
+  inp.type = 'file'; 
+  inp.accept = '.json';
+  inp.onchange = e => {
+    const f = e.target.files[0], r = new FileReader();
+    showToast('⏳ Импорт данных...');
+    r.onload = ev => {
+      try{
+        const d = JSON.parse(ev.target.result);
+        if(d.version >= 3 && d.version <= S.version){
+          Object.keys(d).forEach(k => {
+            if(k === 'me' || k === 'partner' || k === 'cycle' || k === 'ttt' || k === 'hangman' || k === 'settings'){
+              S[k] = {...S[k], ...d[k]};
+              if(k === 'hangman' && d[k].guessed && !Array.isArray(d[k].guessed)) S[k].guessed = [];
+            } else S[k] = d[k];
+          });
+          scheduleSave(); 
+          // After import, if sync is enabled, force overwrite remote data
+          if (S.settings.syncEnabled && db) {
+            showToast('🔄 Синхронизация импортированных данных...');
+            setTimeout(() => { fbPush(); showToast('✅ Данные импортированы и синхронизированы'); }, 1000);
+          }
+          location.reload();
+        } else showToast('Неподдерживаемая версия');
+      }catch(err){ 
+        console.error(err);
+        showToast('Ошибка импорта: файл повреждён'); 
+      }
+    };
+    r.readAsText(f);
+  }; 
+  inp.click();
+}
+
+function installPWA() {
+  if (window._deferredInstall) {
+    window._deferredInstall.prompt();
+    window._deferredInstall.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        showToast('📲 Установка началась');
+      }
+      window._deferredInstall = null;
+      const btn = document.getElementById('installBtn');
+      if (btn) btn.style.display = 'none';
+    });
+  }
+}
+
+// ==================== START ====================
+document.addEventListener('DOMContentLoaded', init);
+
+// Service Worker registration
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE_NAME = 'loveos-v3.52';
+    const urlsToCache = ['./'];
+    self.addEventListener('install', event => {
+      event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
+      self.skipWaiting();
+    });
+    self.addEventListener('fetch', event => {
+      event.respondWith(caches.match(event.request).then(response => {
+        if (response) return response;
+        return fetch(event.request).catch(() => new Response('Offline'));
+      }));
+    });
+  `;
+  const swBlob = new Blob([swCode], {type: 'application/javascript'});
+  const swUrl = URL.createObjectURL(swBlob);
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register(swUrl).catch(err => console.error('SW Error:', err));
+  });
+}
+</script>
+</body>
+</html>
 
