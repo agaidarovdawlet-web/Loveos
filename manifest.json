@@ -1,16 +1,58 @@
-{
-  "name": "LoveOS v3.5",
-  "short_name": "LoveOS",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#0f0f1a",
-  "theme_color": "#e91e63",
-  "icons": [
-    {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23e91e63' width='192' height='192' rx='48'/%3E%3Ctext x='96' y='120' font-size='96' text-anchor='middle'%3E%F0%9F%92%95%3C/text%3E%3C/svg%3E",
-      "sizes": "192x192",
-      "type": "image/svg+xml"
-    }
-  ]
-}
+// ИЗМЕНЕНО: добавлены комментарии на русском для каждого этапа жизненного цикла Service Worker
+
+const CACHE_NAME = 'loveos-v3.5-static';
+const STATIC_ASSETS = [
+  './',
+  './index.html',
+  './manifest.json'
+];
+
+// === Установка: кэшируем статические ресурсы ===
+// Кэшируем только shell приложения (HTML, манифест).
+// Firebase-скрипты (gstatic.com) не кэшируются здесь —
+// они внешние и требуют стратегии network-first.
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(STATIC_ASSETS))
+      .catch(err => console.error('[SW] Ошибка кэширования:', err))
+  );
+  self.skipWaiting();
+});
+
+// === Активация: чистим старые кэши ===
+// Оставляем только текущую версию кэша, удаляем остальные.
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+    ))
+  );
+  self.clients.claim();
+});
+
+// === Перехват запросов ===
+// Для same-origin GET используем Cache First:
+// если ресурс в кэше — отдаём сразу, если нет — идём в сеть.
+// При ошибке сети (offline) для навигационных запросов
+// отдаём index.html, чтобы SPA корректно работала offline.
+//
+// Firebase POST-запросы НЕ перехватываются — Firebase SDK
+// сам управляет offline-очередью через enablePersistence().
+self.addEventListener('fetch', e => {
+  // Пропускаем не-GET запросы и внешние ресурсы
+  if (e.request.method !== 'GET' || !e.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
+  e.respondWith(
+    caches.match(e.request).then(cached => {
+      if (cached) return cached;
+      return fetch(e.request).catch(() => {
+        if (e.request.mode === 'navigate') {
+          return caches.match('./index.html');
+        }
+      });
+    })
+  );
+});
